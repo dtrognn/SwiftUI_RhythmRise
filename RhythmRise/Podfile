@@ -1,0 +1,8 @@
+platform :ios, '16.0'
+
+target 'RhythmRise' do
+  use_frameworks!
+
+  # Pods for RhythmRise
+
+end
