@@ -30,7 +30,7 @@ public class WebViewVM: NSObject, ObservableObject {
     @Published public var showLoading: Bool = false
     private let timeout = 10.0
 
-    public var onDetectResponse = PassthroughSubject<String, Never>()
+    public var onReceiveAuthorizationCode = PassthroughSubject<String, Never>()
 
     override public init() {
         let wv = WKWebView()
@@ -59,7 +59,7 @@ extension WebViewVM: WKNavigationDelegate {
         guard let url = webView.url else { return }
 
         guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "code" }) else { return }
-        onDetectResponse.send(code.value ?? "")
+        onReceiveAuthorizationCode.send(code.value ?? "")
         print("code: \(code.value ?? "nil")")
     }
 

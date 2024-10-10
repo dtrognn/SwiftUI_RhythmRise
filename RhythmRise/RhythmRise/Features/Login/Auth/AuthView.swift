@@ -9,6 +9,7 @@ import RRCommon
 import SwiftUI
 
 struct AuthView: View {
+    @StateObject private var authVM = AuthVM()
     @StateObject private var webViewStore = WebViewVM()
 
     private var screenConfiguration: ScreenConfiguration {
@@ -25,7 +26,8 @@ struct AuthView: View {
             }.onAppear {
                 webViewStore.loadData(AuthManager.shared.signInUrl?.absoluteString ?? "")
             }
-        }.onReceive(webViewStore.onDetectResponse) { _ in
+        }.onReceive(webViewStore.onReceiveAuthorizationCode) { authorization in
+            authVM.requestAccessToken(from: authorization)
         }
     }
 }
