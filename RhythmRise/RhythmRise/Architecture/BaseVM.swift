@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import RRCommon
+import RRCore
 
 open class BaseViewModel: ObservableObject {
     var cancellableSet: Set<AnyCancellable> = []
@@ -23,6 +24,15 @@ open class BaseViewModel: ObservableObject {
 
     open func makeSubscription() {
         
+    }
+
+    func handleError(_ error: Subscribers.Completion<APIError>) {
+        switch error {
+        case .finished:
+            break
+        case .failure:
+            showErrorMessage(language("Error_A_01"))
+        }
     }
 
     open func showLoading(_ isLoading: Bool) {

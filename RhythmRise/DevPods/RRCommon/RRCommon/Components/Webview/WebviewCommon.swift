@@ -60,7 +60,6 @@ extension WebViewVM: WKNavigationDelegate {
 
         guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "code" }) else { return }
         onReceiveAuthorizationCode.send(code.value ?? "")
-        print("code: \(code.value ?? "nil")")
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

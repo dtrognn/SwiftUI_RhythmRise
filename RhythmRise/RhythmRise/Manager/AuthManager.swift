@@ -12,6 +12,7 @@ final class AuthManager {
 
     enum Scope: String {
         case userReadPrivate = "user-read-private"
+        case userReadEmail = "user-read-email"
     }
 
     private let clientId = AppDefineConfiguration.clientID
@@ -20,8 +21,8 @@ final class AuthManager {
     private let scopes: [Scope] = [.userReadPrivate]
 
     var signInUrl: URL? {
-        let scopesFormat: String = scopes.map { $0.rawValue }.joined(separator: "")
-        let string = "\(authorizeUrl)?response_type=code&client_id=\(clientId)&scope=\(scopesFormat)&redirect_uri=\(redirectUris)&show_dialog=TRUE"
+        let scopesFormat: String = scopes.map { $0.rawValue }.joined(separator: " ")
+        let string = "\(authorizeUrl)/authorize?response_type=code&client_id=\(clientId)&scope=\(scopesFormat)&redirect_uri=\(redirectUris)&show_dialog=TRUE"
 
         return URL(string: string)
     }

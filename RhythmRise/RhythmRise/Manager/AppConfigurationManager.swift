@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import RRCommon
+import RRCore
 
 final class AppConfigurationManager {
     static let shared = AppConfigurationManager()
@@ -18,10 +19,21 @@ final class AppConfigurationManager {
 
     func loadCommonConfig() {
         RRCommonConfig.shared.loadConfig()
+        loadModulesConfig()
         AppDataManager.shared.appLanguage.loadLanguage()
 
         configLoading()
         configureAlertMessage()
+    }
+
+    private func loadModulesConfig() {
+        APIConfig.shared.configure(
+            baseUrl: URLEnvironment(
+                baseUrl: AppDefineConfiguration.baseUrl,
+                baseAuthorizeUrl: AppDefineConfiguration.baseAuthorizeUrl,
+                clientId: AppDefineConfiguration.clientID,
+                clientSecretId: AppDefineConfiguration.clientSecretID,
+                redirectUri: AppDefineConfiguration.redirectURIs))
     }
 
     private func configLoading() {
