@@ -34,10 +34,9 @@ final class SplashScreenVM: BaseViewModel {
                 self.handleError(error)
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
-                AppDataManager.shared.userContext.saveAuthorizeInfo(
-                    userAccessToken: response.accessToken,
-                    userRefreshToken: response.refreshToken ?? "",
-                    expireIn: response.expireIn)
+
+                AppDataManager.shared.userContext.saveUserAccessToken(response.accessToken)
+                AppDataManager.shared.userContext.saveExpirationTime(response.expireIn)
                 self.onNextScreen.send(.mainTab)
             }.store(in: &cancellableSet)
     }
