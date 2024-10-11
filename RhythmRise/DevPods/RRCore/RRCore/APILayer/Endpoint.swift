@@ -24,7 +24,7 @@ public protocol Endpoint {
     var headers: [String: String]? { get }
     var token: String { get }
     var refreshToken: String { get }
-    var urlTypeUsed: URLType { get set }
+    var urlTypeUsed: URLType { get }
 }
 
 public extension Endpoint {

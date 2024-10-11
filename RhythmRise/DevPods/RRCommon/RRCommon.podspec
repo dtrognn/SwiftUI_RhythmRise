@@ -27,5 +27,6 @@ TODO: Add long description of the pod here.
 
   s.dependency 'SVProgressHUD'
   s.dependency 'NotificationBannerSwift'
+  s.dependency 'Kingfisher'
 
 end

@@ -43,7 +43,8 @@ final class API {
         if endpoint.method != .GET, let parameters = parameters {
             var bodyComponents = URLComponents()
             bodyComponents.queryItems = parameters.map {
-                URLQueryItem(name: $0.key, value: "\($0.value)")
+                printMessage("BODY param: \($0.key) - value: \($0.value)")
+                return URLQueryItem(name: $0.key, value: "\($0.value)")
             }
             request.httpBody = bodyComponents.query?.data(using: .utf8)
         }
@@ -55,15 +56,14 @@ final class API {
                     throw APIError.invalidResponse
                 }
 
+                printMessage("status code: \(httpResponse.statusCode)")
                 switch httpResponse.statusCode {
                 case 200 ... 299:
                     printFormattedJSON(data: data, type: "RESPONSE")
                     return data
                 case 401:
-                    printMessage("Error code: \(httpResponse.statusCode)")
                     throw APIError.invalidToken
                 default:
-                    printMessage("Error code: \(httpResponse.statusCode)")
                     throw APIError.unknowned
                 }
             }
