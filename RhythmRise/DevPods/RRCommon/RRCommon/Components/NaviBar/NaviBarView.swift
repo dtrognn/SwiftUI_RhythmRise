@@ -10,15 +10,16 @@ import SwiftUI
 import SwiftUI
 
 struct NaviBarView: View {
-    @ObservedObject private var screenConfiguration: ScreenConfiguration
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var themeManager: ThemeManager
+    @ObservedObject private var screenConfiguration: ScreenConfiguration
 
     init(_ screenConfiguration: ScreenConfiguration) {
         self.screenConfiguration = screenConfiguration
     }
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: themeManager.layout.zero) {
             HStack {
                 if screenConfiguration.showBackButton {
                     backButton
@@ -28,10 +29,10 @@ struct NaviBarView: View {
                     .font(.headline)
                 Spacer()
                 backButton.opacity(0)
-            }.padding(16)
+            }.padding(themeManager.layout.standardSpace)
                 .navigationBarHidden(true)
                 .background(
-                    Color.clear
+                    themeManager.theme.naviBackgroundColor
                         .ignoresSafeArea(edges: .top)
                 )
             if screenConfiguration.showNaviUnderline {
@@ -52,6 +53,7 @@ private extension NaviBarView {
         } label: {
             Image.image("ic_arrow_back")
                 .resizable()
+                .applyTheme(themeManager.theme.naviBackIconColor)
                 .frame(width: 22, height: 22)
         }
     }
@@ -59,6 +61,8 @@ private extension NaviBarView {
     var titleSection: some View {
         return VStack {
             Text(LocalizedStringKey(screenConfiguration.title))
+                .font(themeManager.font.semibold16)
+                .foregroundStyle(themeManager.theme.naviTextColor)
                 .lineLimit(1)
         }
     }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 public struct ScreenContainerView<Content: View>: View {
+    @EnvironmentObject private var themeManager: ThemeManager
     @ObservedObject public var screenConfiguration: ScreenConfiguration
     public var content: Content
 
@@ -23,7 +24,7 @@ public struct ScreenContainerView<Content: View>: View {
 
     var bodyView: some View {
         ZStack(alignment: .top) {
-            Color.clear
+            themeManager.theme.backgroundColor
                 .ignoresSafeArea()
 
             VStack(spacing: .zero) {

@@ -9,12 +9,16 @@ import RRCommon
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var router: Router
-    var sc: ScreenConfiguration {
-        return .init(title: "", showNaviBar: false)
+    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var themeManager: ThemeManager
+
+    var screenConfiguration: ScreenConfiguration {
+        return .init(title: "", hidesBottomBarWhenPushed: false, showNaviBar: false)
     }
 
     var body: some View {
-        Text("Home")
+        ScreenContainerView(screenConfiguration) {
+            VStack {}
+        }
     }
 }

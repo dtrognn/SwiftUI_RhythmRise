@@ -24,7 +24,7 @@ struct TabItem: View {
                 .foregroundStyle(self.colorSelection)
         } icon: {
             Image(self.tab.image)
-                .applyTheme()
+                .applyTheme(colorSelection)
         }.environment(\.locale, .init(identifier: self.languageIdentifier))
             .onReceive(LanguageManager.shared.onChangeLanguageBundle) { languageCode in
                 self.languageIdentifier = languageCode.getLanguageCode()
@@ -35,39 +35,23 @@ struct TabItem: View {
 struct TabbarRouterView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var activeTab: Tab = .home
-    @State private var allTabs: [AnimatedTab] = Tab.allCases.compactMap { tab -> AnimatedTab? in
-        .init(tab: tab)
-    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            TabView(selection: self.$activeTab) {
-                HomeRouterView()
-                    .tabItem {
-                        TabItem(.home)
-                    }.tag(Tab.home)
+        TabView(selection: self.$activeTab) {
+            HomeRouterView()
+                .tabItem {
+                    TabItem(.home)
+                }.tag(Tab.home)
 
-                SearchView()
-                    .tabItem {
-                        TabItem(.search)
-                    }.tag(Tab.search)
+            SearchView()
+                .tabItem {
+                    TabItem(.search)
+                }.tag(Tab.search)
 
-                LibraryView()
-                    .tabItem {
-                        TabItem(.library)
-                    }.tag(Tab.library)
-            }.tint(.white)
-        }.ignoresSafeArea()
-            .preferredColorScheme(.dark)
-    }
-}
-
-extension View {
-    @ViewBuilder
-    func setUpTab(_ tab: Tab) -> some View {
-        self
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .tag(tab)
-            .toolbar(.hidden, for: .tabBar)
+            LibraryView()
+                .tabItem {
+                    TabItem(.library)
+                }.tag(Tab.library)
+        }.tint(ThemeManager.shared.theme.iconColor)
     }
 }
