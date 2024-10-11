@@ -22,6 +22,12 @@ final class AuthVM: BaseViewModel {
                 guard let self = self else { return }
                 self.showLoading(false)
 
+                AppDataManager.shared.userContext.saveAuthorizeInfo(
+                    userAccessToken: response.accessToken,
+                    userRefreshToken: response.refreshToken,
+                    expireIn: response.expireIn)
+                AppDataManager.shared.updateLoginState(true)
+
                 print("AuthVM access token: \(response.accessToken)")
                 print("AuthVM expire in: \(response.expireIn)")
                 print("AuthVM refresh token: \(response.refreshToken)")

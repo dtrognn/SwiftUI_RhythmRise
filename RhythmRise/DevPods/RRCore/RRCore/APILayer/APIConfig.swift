@@ -18,6 +18,8 @@ public enum Header {
     public static let TextHtml = "text/html"
     public static let Language = "Accept-Language"
     public static let APIKey = "x-api-key"
+    public static let AuthorizationCode = "authorization_code"
+    public static let RefreshToken = "refresh_token"
 
     public static let DeviceName = "DeviceName"
     public static let Platform = "Platform"

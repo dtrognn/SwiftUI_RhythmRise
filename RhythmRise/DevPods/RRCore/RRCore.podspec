@@ -25,4 +25,5 @@ TODO: Add long description of the pod here.
   s.source_files = 'RRCore/**/*.{swift,h,m}'
   s.resources = 'RRCore/**/*.{png,xcassets,json,ttf,txt,storyboard,xib,xcdatamodeld,strings}'
 
+  s.dependency 'RRAuthentication'
 end

@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import RRAuthentication
 
 public enum URLType {
     case authorization
@@ -32,11 +33,11 @@ public extension Endpoint {
     }
 
     var token: String {
-        return bearerToken("")
+        return bearerToken(UserContext.shared.userAccessToken)
     }
 
     var refreshToken: String {
-        return ""
+        return UserContext.shared.userRefreshToken
     }
 
     var urlTypeUsed: URLType {

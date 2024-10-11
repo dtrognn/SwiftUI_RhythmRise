@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import RRAuthentication
 
 final class AppDataManager {
     static let shared = AppDataManager()
 
+    let userContext = UserContext.shared
     let appState: AppState
     let appLanguage: AppLanguage
 

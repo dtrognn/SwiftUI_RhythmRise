@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RRAuthentication
 
 struct AppState {
     var loginState: LoginState = .init()
@@ -15,6 +16,6 @@ class LoginState: ObservableObject {
     @Published var loggedIn: Bool = false
 
     init() {
-        loggedIn = false
+        loggedIn = !UserContext.shared.userAccessToken.isEmpty
     }
 }

@@ -40,7 +40,7 @@ public struct GetAccessTokenEndpoint: Endpoint {
         public let redirectUri: String
 
         public init(
-            grandType: String = "authorization_code",
+            grandType: String = Header.AuthorizationCode,
             code: String,
             redirectUri: String = APIConfig.shared.urlEnviroment.redirectUri)
         {

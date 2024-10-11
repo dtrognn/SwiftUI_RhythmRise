@@ -10,19 +10,15 @@ import SwiftUI
 
 struct SplashScreenView: View {
     @EnvironmentObject private var appRouter: AppRouter
-    @StateObject private var router: Router = .init()
+    @StateObject private var vm: SplashScreenVM = .init()
 
     var body: some View {
         Text("SplashScreenView")
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    nextScreen()
-                }
+                vm.checkAppState()
+            }.onReceive(vm.onNextScreen) { screen in
+                appRouter.updateScreen(screen == .mainTab)
+                appRouter.subcribeLoginState()
             }
-    }
-
-    func nextScreen() {
-        appRouter.updateScreen(!AppDataManager.shared.isLogout)
-        appRouter.subcribeLoginState()
     }
 }
