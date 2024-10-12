@@ -11,8 +11,8 @@ public struct ArtistItemModel: Codable {
     public let id: String
     public let genres: [String]?
     public let images: [ImageItemModel]?
-    public let followers: FollowerModel?
+    public let followers: FollowersModel?
     public let popularity: Int?
-    public let type: String
+    public let type: String?
     public let name: String
 }

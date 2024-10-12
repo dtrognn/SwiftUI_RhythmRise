@@ -23,6 +23,7 @@ struct HomeView: View {
                 headerView
                 VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
                     favouriteArtistsView
+                    recentlyPlayedTracksView
                 }
             }
         }.onAppear {
@@ -55,6 +56,12 @@ private extension HomeView {
 private extension HomeView {
     var favouriteArtistsView: some View {
         return FavouriteArtistsView(vm.favouriteArtists) { _ in
+            // TODO: -
+        }
+    }
+
+    var recentlyPlayedTracksView: some View {
+        return RecentlyPlayedTrackView(vm.recentlyPlayedTracks) { _ in
             // TODO: -
         }
     }
