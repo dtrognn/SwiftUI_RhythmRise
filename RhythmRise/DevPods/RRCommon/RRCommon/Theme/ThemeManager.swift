@@ -18,7 +18,8 @@ public class ThemeManager: ObservableObject {
 
     public init() {
         let isDarkMode = UserDefaults.standard.bool(forKey: KEY_APP_THEME_TYPE)
-        theme = isDarkMode ? AppDarkTheme() : AppLightTheme()
+//        theme = isDarkMode ? AppDarkTheme() : AppLightTheme()
+        theme = AppDarkTheme()
     }
 
     public var isDarkMode: Bool {

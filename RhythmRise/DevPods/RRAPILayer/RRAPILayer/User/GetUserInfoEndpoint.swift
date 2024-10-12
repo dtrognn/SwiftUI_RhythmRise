@@ -24,7 +24,7 @@ public struct GetCurrentUserInfoEndpoint: Endpoint {
         public let explicitContent: ExplicitContent
         public let product: String
         public let displayName: String
-        public let images: [Image]?
+        public let images: [ImageItemModel]?
         public let email: String
 
         public enum CodingKeys: String, CodingKey {
@@ -49,24 +49,6 @@ public struct GetCurrentUserInfoEndpoint: Endpoint {
         public init(filterLocked: Bool, filterEnabled: Bool) {
             self.filterLocked = filterLocked
             self.filterEnabled = filterEnabled
-        }
-    }
-
-    public struct Image: Codable {
-        public let url: String
-        public let width: Int
-        public let height: Int
-
-        public enum CodingKeys: String, CodingKey {
-            case url
-            case width
-            case height
-        }
-
-        public init(url: String, width: Int, height: Int) {
-            self.url = url
-            self.width = width
-            self.height = height
         }
     }
 }

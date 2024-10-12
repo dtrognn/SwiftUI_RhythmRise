@@ -19,8 +19,11 @@ struct HomeView: View {
 
     var body: some View {
         ScreenContainerView(screenConfiguration) {
-            VStack {
+            VStack(spacing: themeManager.layout.zero) {
                 headerView
+                VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
+                    favouriteArtistsView
+                }
             }
         }.onAppear {
             vm.loadData()
@@ -45,6 +48,14 @@ private extension HomeView {
                 ProgressView().applyTheme()
             }.frame(width: 32, height: 32)
                 .clipShape(.circle)
+        }
+    }
+}
+
+private extension HomeView {
+    var favouriteArtistsView: some View {
+        return FavouriteArtistsView(vm.favouriteArtists) { _ in
+            // TODO: -
         }
     }
 }
