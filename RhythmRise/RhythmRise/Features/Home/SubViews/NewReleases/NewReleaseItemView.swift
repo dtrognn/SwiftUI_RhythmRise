@@ -1,31 +1,31 @@
 //
-//  RecentlyPlayedTrackItemView.swift
+//  NewReleaseItemView.swift
 //  RhythmRise
 //
-//  Created by dtrognn on 12/10/24.
+//  Created by dtrognn on 13/10/24.
 //
 
 import RRCommon
 import SwiftUI
 
-struct RecentlyPlayedTrackItemView: View {
+struct NewReleaseItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    private var track: TrackItemViewData
-    private var onSelect: (TrackItemViewData) -> Void
+    private var album: AlbumItemViewData
+    private var onSelect: ((AlbumItemViewData) -> Void)?
 
     private let WIDTH: CGFloat = 130
 
-    init(_ track: TrackItemViewData, onSelect: @escaping (TrackItemViewData) -> Void) {
-        self.track = track
+    init(_ album: AlbumItemViewData, onSelect: ((AlbumItemViewData) -> Void)? = nil) {
+        self.album = album
         self.onSelect = onSelect
     }
 
     var body: some View {
         Button {
             Vibration.selection.vibrate()
-            onSelect(track)
+            onSelect?(album)
         } label: {
-            VStack(alignment: .leading, spacing: themeManager.layout.mediumSpace) {
+            VStack(spacing: themeManager.layout.mediumSpace) {
                 imageView
                 titleText
             }.frame(maxWidth: WIDTH)
@@ -33,15 +33,15 @@ struct RecentlyPlayedTrackItemView: View {
     }
 }
 
-private extension RecentlyPlayedTrackItemView {
+private extension NewReleaseItemView {
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: track.album.imageUrl)) {
+        return ImageUrl(configuration: .init(urlString: album.imageUrl)) {
             ProgressView().applyTheme()
         }.frame(width: WIDTH, height: WIDTH)
     }
 
     var titleText: some View {
-        return Text(track.name)
+        return Text(album.name)
             .font(themeManager.font.regular16)
             .foregroundStyle(themeManager.theme.textNormalColor)
             .frame(maxWidth: .infinity, alignment: .topLeading)

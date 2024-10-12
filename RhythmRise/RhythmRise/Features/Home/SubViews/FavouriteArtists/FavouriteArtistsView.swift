@@ -30,8 +30,8 @@ struct FavouriteArtistsView: View {
                             onSelect(artistSelected)
                         }
                     }
-                }.padding(.leading, themeManager.layout.standardSpace)
-            }.fixedSize(horizontal: false, vertical: true)
+                }.padding(.horizontal, themeManager.layout.standardSpace)
+            }
         }
     }
 }

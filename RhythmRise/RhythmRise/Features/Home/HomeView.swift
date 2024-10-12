@@ -21,11 +21,14 @@ struct HomeView: View {
         ScreenContainerView(screenConfiguration) {
             VStack(spacing: themeManager.layout.zero) {
                 headerView
-                VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
-                    favouriteArtistsView
-                    recentlyPlayedTracksView
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: themeManager.layout.largeSpace) {
+                        favouriteArtistsView
+                        recentlyPlayedTracksView
+                        newReleasesView
+                    }
                 }
-            }
+            }.padding(.bottom, themeManager.layout.standardButtonHeight)
         }.onAppear {
             vm.loadData()
         }
@@ -62,6 +65,12 @@ private extension HomeView {
 
     var recentlyPlayedTracksView: some View {
         return RecentlyPlayedTrackView(vm.recentlyPlayedTracks) { _ in
+            // TODO: -
+        }
+    }
+
+    var newReleasesView: some View {
+        return NewReleasesView(vm.newReleases) { _ in
             // TODO: -
         }
     }
