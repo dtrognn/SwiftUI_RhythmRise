@@ -12,9 +12,14 @@ final class HomeVM: BaseViewModel {
     @Published var userAvatarUrl: String = ""
     @Published var favouriteArtists: [ArtistItemViewData] = []
 
+    private var isLoadFirst: Bool = true
+
     func loadData() {
-        apiGetCurrentUserInfo()
-        getTopArtists()
+        if isLoadFirst {
+            isLoadFirst = false
+            apiGetCurrentUserInfo()
+            getTopArtists()
+        }
     }
 
     private func apiGetCurrentUserInfo() {
@@ -32,17 +37,6 @@ final class HomeVM: BaseViewModel {
 
                 guard let avatar = response.images?.first else { return }
                 self.userAvatarUrl = avatar.url
-            }.store(in: &cancellableSet)
-    }
-
-    private func apiGetSeveralBrowseCategories() {
-        let parasm = GetSeveralBrowseCategoriesEndpoint.Request(limit: 5)
-        GetSeveralBrowseCategoriesEndpoint.service.request(parameters: parasm)
-            .sink { [weak self] error in
-                guard let self = self else { return }
-                self.handleError(error)
-            } receiveValue: { [weak self] _ in
-                guard let self = self else { return }
             }.store(in: &cancellableSet)
     }
 

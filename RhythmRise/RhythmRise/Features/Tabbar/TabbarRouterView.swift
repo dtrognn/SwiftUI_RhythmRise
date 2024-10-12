@@ -43,7 +43,7 @@ struct TabbarRouterView: View {
                     TabItem(.home)
                 }.tag(Tab.home)
 
-            SearchView()
+            SearchRouterView()
                 .tabItem {
                     TabItem(.search)
                 }.tag(Tab.search)

@@ -28,6 +28,16 @@ public struct GetSeveralBrowseCategoriesEndpoint: Endpoint {
     }
 
     public struct Response: Codable {
+        public let categories: BrowseCategoryItemModel
+    }
 
+    public struct BrowseCategoryItemModel: Codable {
+        public let items: [CategoryItemModel]?
+    }
+
+    public struct CategoryItemModel: Codable {
+        public let id: String
+        public let icons: [ImageItemModel]?
+        public let name: String
     }
 }
