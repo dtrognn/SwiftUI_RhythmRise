@@ -8,6 +8,10 @@
 import Foundation
 import RRCore
 
+public enum LocaleRequest: String {
+    case vn = "vi_VN"
+}
+
 public struct GetSeveralBrowseCategoriesEndpoint: Endpoint {
     public static let service = GetSeveralBrowseCategoriesEndpoint()
 
@@ -20,8 +24,8 @@ public struct GetSeveralBrowseCategoriesEndpoint: Endpoint {
         public let limit: Int
         public let offset: Int
 
-        public init(locale: String = "vi_VN", limit: Int, offset: Int = 0) {
-            self.locale = locale
+        public init(locale: LocaleRequest = .vn, limit: Int, offset: Int = 0) {
+            self.locale = locale.rawValue
             self.limit = limit
             self.offset = offset
         }

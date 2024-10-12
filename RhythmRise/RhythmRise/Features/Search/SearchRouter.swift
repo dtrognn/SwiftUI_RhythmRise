@@ -8,7 +8,9 @@
 import SwiftUI
 import RRCommon
 
-enum SearchRoute: Route {}
+enum SearchRoute: Route {
+    case singleBrowseCategory(BrowseCategoryItemViewData)
+}
 
 struct SearchRouterView: View {
     @StateObject private var router = Router()
@@ -17,7 +19,10 @@ struct SearchRouterView: View {
         NavigationStack(path: $router.navigationPath) {
             SearchView()
                 .navigationDestination(for: SearchRoute.self) { destination in
-
+                    switch destination {
+                    case .singleBrowseCategory(let params):
+                        SingleBrowseCategoryView(params)
+                    }
                 }
         }.environmentObject(router)
     }

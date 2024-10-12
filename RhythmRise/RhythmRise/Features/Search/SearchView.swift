@@ -40,7 +40,8 @@ private extension SearchView {
         ]
         return LazyVGrid(columns: columns, spacing: themeManager.layout.standardSpace) {
             ForEach(vm.severalBrowseCategories) { category in
-                BrowseCategoryItemView(category) { _ in
+                BrowseCategoryItemView(category) { categorySelected in
+                    router.route(to: SearchRoute.singleBrowseCategory(categorySelected))
                 }
             }
         }
