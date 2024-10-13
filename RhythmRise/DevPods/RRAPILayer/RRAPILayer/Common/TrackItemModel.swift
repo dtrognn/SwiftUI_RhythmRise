@@ -14,7 +14,7 @@ public struct TrackItemModel: Codable {
     public let artists: [ArtistItemModel]
     public let type: String
     public let duration: Int
-    public let previewUrl: String
+    public let previewUrl: String?
 
     enum CodingKeys: String, CodingKey {
         case id

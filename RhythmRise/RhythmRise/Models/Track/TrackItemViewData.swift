@@ -44,6 +44,6 @@ class TrackItemViewData: Identifiable, Hashable {
     }
 
     var previewUrl: String {
-        return track.previewUrl
+        return track.previewUrl ?? ""
     }
 }

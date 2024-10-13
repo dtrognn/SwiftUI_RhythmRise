@@ -14,6 +14,7 @@ final class HomeVM: BaseViewModel {
     @Published var favouriteArtists: [ArtistItemViewData] = []
     @Published var recentlyPlayedTracks: [TrackItemViewData] = []
     @Published var newReleases: [AlbumItemViewData] = []
+    @Published var recommendations: [TrackItemViewData] = []
 
     private var isLoadFirst: Bool = true
 
@@ -48,6 +49,12 @@ extension HomeVM {
 
                 guard let avatar = response.images?.first else { return }
                 self.userAvatarUrl = avatar.url
+
+                AppDataManager.shared.userContext.saveUserInfo(
+                    id: response.id,
+                    email: response.email,
+                    displayName: response.displayName,
+                    imageUrl: avatar.url)
             }.store(in: &cancellableSet)
     }
 
@@ -61,11 +68,13 @@ extension HomeVM {
                 self.handleError(error)
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
+                guard let artists = response.items else { return }
 
-                guard let artists = response.items else {
-                    return
-                }
                 self.favouriteArtists = artists.map { ArtistItemViewData($0) }
+
+                if self.favouriteArtists.count >= 5 {
+                    self.apiGetRecommendations()
+                }
             }.store(in: &cancellableSet)
     }
 
@@ -102,6 +111,35 @@ extension HomeVM {
                 guard let items = response.albums.items else { return }
                 self.newReleases = items.map { AlbumItemViewData($0) }
             }.store(in: &cancellableSet)
+    }
 
+    // MARK: - Get current user's playlists
+
+    // test api mới thấy trả về 1 item
+    private func apiGetCurrentUsersPlaylists() {
+        let params = GetCurrentUsersPlaylistsEndpoint.Request()
+        GetCurrentUsersPlaylistsEndpoint.service.request(parameters: params)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.handleError(error)
+            } receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+            }.store(in: &cancellableSet)
+    }
+
+    // MARK: - Get recommendations
+
+    private func apiGetRecommendations() {
+        let seedArtists = favouriteArtists.prefix(5).map { $0.id }.joined(separator: ",")
+        let params = GetRecommendationsEndpoint.Request(seedArtists: seedArtists)
+        GetRecommendationsEndpoint.service.request(parameters: params)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.handleError(error)
+            } receiveValue: { [weak self] response in
+                guard let self = self else { return }
+
+                self.recommendations = response.tracks?.map { TrackItemViewData($0) } ?? []
+            }.store(in: &cancellableSet)
     }
 }

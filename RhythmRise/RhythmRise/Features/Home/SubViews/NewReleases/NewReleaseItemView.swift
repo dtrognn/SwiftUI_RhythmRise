@@ -45,6 +45,7 @@ private extension NewReleaseItemView {
             .font(themeManager.font.regular16)
             .foregroundStyle(themeManager.theme.textNormalColor)
             .frame(maxWidth: .infinity, alignment: .topLeading)
+            .frame(height: 40, alignment: .topLeading)
             .lineLimit(2)
             .multilineTextAlignment(.leading)
     }

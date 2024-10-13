@@ -34,7 +34,7 @@ struct RecentlyPlayedTrackView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: themeManager.layout.standardSpace) {
                     ForEach(recentlyPlayedTracks) { track in
-                        RecentlyPlayedTrackItemView(track) { trackSelected in
+                        HomeTrackItemView(track) { trackSelected in
                             onSelect?(trackSelected)
                         }
                     }

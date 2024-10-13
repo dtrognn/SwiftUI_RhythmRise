@@ -23,12 +23,21 @@ struct HomeView: View {
                 headerView
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: themeManager.layout.largeSpace) {
-                        favouriteArtistsView
-                        recentlyPlayedTracksView
-                        newReleasesView
-                    }
+                        if !vm.favouriteArtists.isEmpty {
+                            favouriteArtistsView
+                        }
+                        if !vm.recentlyPlayedTracks.isEmpty {
+                            recentlyPlayedTracksView
+                        }
+                        if !vm.recommendations.isEmpty {
+                            recommendationsView
+                        }
+                        if !vm.newReleases.isEmpty {
+                            newReleasesView
+                        }
+                    }.padding(.bottom, themeManager.layout.standardButtonHeight * 4)
                 }
-            }.padding(.bottom, themeManager.layout.standardButtonHeight)
+            }
         }.onAppear {
             vm.loadData()
         }
@@ -71,6 +80,12 @@ private extension HomeView {
 
     var newReleasesView: some View {
         return NewReleasesView(vm.newReleases) { _ in
+            // TODO: -
+        }
+    }
+
+    var recommendationsView: some View {
+        return RecommendationsView(vm.recommendations) { _ in
             // TODO: -
         }
     }
