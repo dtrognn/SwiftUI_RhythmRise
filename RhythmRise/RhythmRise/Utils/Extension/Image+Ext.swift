@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Image {
-    func image(_ resource: String) -> Image {
-        return Image(resource, bundle: .main)
+    static func image(_ name: String) -> Image {
+        return Image(name, bundle: .main)
     }
 }

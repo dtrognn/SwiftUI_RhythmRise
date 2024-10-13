@@ -4,8 +4,15 @@
 
 "Error_A_01" = "An error occurred, please try again!";
 
+"Common_A_01" = "Follow";
+"Common_A_02" = "Show all";
+
 "Home_A_01" = "Your favourite artists";
 "Home_A_02" = "Recently";
 "Home_A_03" = "Show all";
 "Home_A_04" = "Newly released";
 "Home_A_05" = "For %@";
+
+"Artist_Detail_A_01" = "followers";
+"Artist_Detail_A_02" = "Popular";
+"Artist_Detail_A_03" = "Releases";
