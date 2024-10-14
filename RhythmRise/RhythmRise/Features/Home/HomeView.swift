@@ -73,7 +73,7 @@ private extension HomeView {
 private extension HomeView {
     var favouriteArtistsView: some View {
         return FavouriteArtistsView(vm.favouriteArtists) { artist in
-            router.route(to: HomeRoute.artistDetail(artist.id))
+            router.route(to: HomeRoute.artistDetail(artist.id, .artist))
         }
     }
 

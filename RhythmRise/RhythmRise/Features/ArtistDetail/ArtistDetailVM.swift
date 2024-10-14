@@ -9,45 +9,62 @@ import Foundation
 import RRAPILayer
 
 final class ArtistDetailVM: BaseViewModel {
-    private var artistId: String
+    private var id: String
+    private var playerMediaType: PlayerMediaType
 
-    @Published var artist: ArtistItemViewData?
+    @Published var player: PlayerItemViewData?
     @Published var topTracks: [TrackItemViewData] = []
     @Published var albums: [AlbumItemViewData] = []
 
-    init(_ artistId: String) {
-        self.artistId = artistId
+    init(id: String, playerMediaType: PlayerMediaType) {
+        self.id = id
+        self.playerMediaType = playerMediaType
     }
 
     func loadData() {
+        switch playerMediaType {
+        case .artist:
+            loadDataArtist()
+        default:
+            return
+        }
+    }
+}
+
+// MARK: - Artist
+
+extension ArtistDetailVM {
+    func getGenresOfArtist() -> [String] {
+        if let artist = player?.player as? ArtistItemViewData {
+            return artist.genres
+        }
+        return []
+    }
+
+    private func loadDataArtist() {
         apiGetArtist()
         apiGetArtistsTopTracks()
         apiGetArtistAlbums()
     }
-}
 
-// MARK: - API
-
-extension ArtistDetailVM {
-    // MARK: - Get artist
-
+    // TODO: - Get artist
     private func apiGetArtist() {
         let params = GetArtistEndpoint.Request()
-        GetArtistEndpoint.service(artistId).request(parameters: params)
+        GetArtistEndpoint.service(id).request(parameters: params)
             .sink { [weak self] error in
                 guard let self = self else { return }
                 self.handleError(error)
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
-                self.artist = ArtistItemViewData(response)
+                let artistMapping = PlayerMediaFactory.mapping(type: .artist, data: response)
+                self.player = PlayerItemViewData(artistMapping)
             }.store(in: &cancellableSet)
     }
 
-    // MARK: - Get artist's top tracks
-
+    // TODO: - Get artist's top tracks
     private func apiGetArtistsTopTracks() {
         let params = GetArtistsTopTracksEndpoint.Request()
-        GetArtistsTopTracksEndpoint.service(artistId).request(parameters: params)
+        GetArtistsTopTracksEndpoint.service(id).request(parameters: params)
             .sink { [weak self] error in
                 guard let self = self else { return }
                 self.handleError(error)
@@ -55,14 +72,14 @@ extension ArtistDetailVM {
                 guard let self = self else { return }
                 guard let tracks = response.tracks else { return }
                 self.topTracks = tracks.map { TrackItemViewData($0) }
+                self.player?.tracks = tracks.map { TrackItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 
-    // MARK: - Get artist's albums
-
+    // TODO: - Get artist's albums
     private func apiGetArtistAlbums() {
         let params = GetArtistsAlbumsEndpoint.Request()
-        GetArtistsAlbumsEndpoint.service(artistId).request(parameters: params)
+        GetArtistsAlbumsEndpoint.service(id).request(parameters: params)
             .sink { [weak self] error in
                 guard let self = self else { return }
                 self.handleError(error)
@@ -70,15 +87,7 @@ extension ArtistDetailVM {
                 guard let self = self else { return }
                 guard let items = response.items else { return }
                 self.albums = items.map { AlbumItemViewData($0) }
+                self.player?.albums = items.map { AlbumItemViewData($0) }
             }.store(in: &cancellableSet)
-    }
-}
-
-private extension ArtistItemViewData {
-    init(_ data: GetArtistEndpoint.Response) {
-        self.id = data.id
-        self.name = data.name
-        self.images = data.images?.map { ImageData($0) } ?? []
-        self.genres = data.genres?.map { $0 } ?? []
     }
 }

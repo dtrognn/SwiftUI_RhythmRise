@@ -19,8 +19,8 @@ struct ArtistDetailView: View {
         return .init(title: "", showNaviBar: false)
     }
 
-    init(_ artistId: String) {
-        self._vm = StateObject(wrappedValue: ArtistDetailVM(artistId))
+    init(id: String, playerMediaType: PlayerMediaType) {
+        self._vm = StateObject(wrappedValue: ArtistDetailVM(id: id, playerMediaType: playerMediaType))
     }
 
     var body: some View {
@@ -60,7 +60,7 @@ private extension ArtistDetailView {
             let minY = proxy.frame(in: .named(coordinatorNameSpace)).minY
             let progress = minY / (height * (minY > 0 ? 0.5 : 0.8))
 
-            ImageUrl(configuration: .init(urlString: vm.artist?.imageLargeUrl ?? ""), contentMode: .fill) {
+            ImageUrl(configuration: .init(urlString: vm.player?.imageUrl ?? ""), contentMode: .fill) {
                 ProgressView().applyTheme()
             }.frame(width: size.width, height: size.height + (minY > 0 ? minY : 0))
                 .clipped()
@@ -108,14 +108,14 @@ private extension ArtistDetailView {
     }
 
     var artistNameText: some View {
-        return Text(vm.artist?.name ?? "")
+        return Text(vm.player?.name ?? "")
             .font(themeManager.font.semibold30)
             .foregroundStyle(themeManager.theme.textNormalColor)
     }
 
     var followersView: some View {
         return HStack(spacing: themeManager.layout.smallSpace) {
-            ForEach(vm.artist?.genres ?? [], id: \.self) { genre in
+            ForEach(vm.getGenresOfArtist(), id: \.self) { genre in
                 Text(genre)
                     .font(themeManager.font.regular12)
                     .foregroundStyle(themeManager.theme.textNoteColor)
@@ -183,7 +183,7 @@ private extension ArtistDetailView {
                 Spacer()
             }.padding(.horizontal, themeManager.layout.standardSpace)
                 .overlay {
-                    Text(vm.artist?.name ?? "")
+                    Text(vm.player?.name ?? "")
                         .font(themeManager.font.semibold16)
                         .foregroundStyle(themeManager.theme.naviTextColor)
                         .offset(y: -titleProgress > 0.75 ? 0 : 45)
