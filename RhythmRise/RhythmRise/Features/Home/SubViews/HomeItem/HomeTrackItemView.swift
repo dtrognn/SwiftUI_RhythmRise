@@ -35,7 +35,7 @@ struct HomeTrackItemView: View {
 
 private extension HomeTrackItemView {
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: track.album.imageUrl)) {
+        return ImageUrl(configuration: .init(urlString: track.album?.imageUrl ?? "")) {
             ProgressView().applyTheme()
         }.frame(width: WIDTH, height: WIDTH)
     }

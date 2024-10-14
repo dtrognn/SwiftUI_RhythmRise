@@ -51,7 +51,7 @@ private extension SmallTrackItemView {
     }
 
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: track.album.imageUrl)) {
+        return ImageUrl(configuration: .init(urlString: track.album?.imageUrl ?? "")) {
             ProgressView().applyTheme()
         }.frame(width: 50, height: 50)
     }

@@ -31,8 +31,11 @@ class TrackItemViewData: Identifiable, Hashable {
         return track.name
     }
 
-    var album: AlbumItemViewData {
-        return AlbumItemViewData(track.album)
+    var album: AlbumItemViewData? {
+        if let album = track.album {
+            return AlbumItemViewData(album)
+        }
+        return nil
     }
 
     var artists: [ArtistItemViewData] {

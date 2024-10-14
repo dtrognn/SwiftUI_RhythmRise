@@ -155,7 +155,7 @@ private extension PlayerView {
     }
 
     var trackImageView: some View {
-        return ImageUrl(configuration: .init(urlString: playerManager.currentTrack?.album.imageUrl ?? "")) {
+        return ImageUrl(configuration: .init(urlString: playerManager.currentTrack?.album?.imageUrl ?? "")) {
             ProgressView().applyTheme()
         }.cornerRadius(themeManager.layout.standardCornerRadius)
             .aspectRatio(1, contentMode: .fill)

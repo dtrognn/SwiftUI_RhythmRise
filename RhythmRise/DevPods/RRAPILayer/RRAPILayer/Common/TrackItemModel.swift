@@ -10,7 +10,7 @@ import Foundation
 public struct TrackItemModel: Codable {
     public let id: String
     public let name: String
-    public let album: AlbumItemData
+    public let album: AlbumItemData?
     public let artists: [ArtistItemModel]
     public let type: String
     public let duration: Int

@@ -78,8 +78,8 @@ private extension HomeView {
     }
 
     var recentlyPlayedTracksView: some View {
-        return RecentlyPlayedTrackView(vm.recentlyPlayedTracks) { _ in
-            // TODO: -
+        return RecentlyPlayedTrackView(vm.recentlyPlayedTracks) { track in
+            presentPlayer(track)
         }
     }
 
@@ -91,8 +91,12 @@ private extension HomeView {
 
     var recommendationsView: some View {
         return RecommendationsView(vm.recommendations) { track in
-            playerManager.currentTrack = track
-            presentPlayerView = true
+            presentPlayer(track)
         }
+    }
+
+    func presentPlayer(_ track: TrackItemViewData) {
+        playerManager.currentTrack = track
+        presentPlayerView = true
     }
 }
