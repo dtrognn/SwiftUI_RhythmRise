@@ -57,6 +57,7 @@ struct AppRouterView: View {
     @StateObject private var appRouter = AppRouter()
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var themeManager = ThemeManager.shared
+    @StateObject private var playerManager = PlayerManager.shared
 
     var body: some View {
         appRouter.getInstanceScreen(appRouter.screen)
@@ -64,6 +65,7 @@ struct AppRouterView: View {
                 router.popToRoot()
             }).environmentObject(appRouter)
             .environmentObject(themeManager)
+            .environmentObject(playerManager)
             .environmentObject(self.languageManager)
             .environment(\.locale, .init(identifier: self.languageManager.currentLanguage.getLanguageCode()))
     }

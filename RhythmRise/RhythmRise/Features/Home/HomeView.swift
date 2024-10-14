@@ -11,7 +11,10 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var playerManager: PlayerManager
     @StateObject private var vm = HomeVM()
+
+    @State private var presentPlayerView: Bool = false
 
     var screenConfiguration: ScreenConfiguration {
         return .init(title: "", hidesBottomBarWhenPushed: false, showNaviBar: false)
@@ -38,7 +41,9 @@ struct HomeView: View {
                     }.padding(.bottom, themeManager.layout.standardButtonHeight * 4)
                 }
             }
-        }.onAppear {
+        }.fullScreenCover(isPresented: $presentPlayerView, content: {
+            PlayerView($presentPlayerView)
+        }).onAppear {
             vm.loadData()
         }
     }
@@ -85,8 +90,9 @@ private extension HomeView {
     }
 
     var recommendationsView: some View {
-        return RecommendationsView(vm.recommendations) { _ in
-            // TODO: -
+        return RecommendationsView(vm.recommendations) { track in
+            playerManager.currentTrack = track
+            presentPlayerView = true
         }
     }
 }

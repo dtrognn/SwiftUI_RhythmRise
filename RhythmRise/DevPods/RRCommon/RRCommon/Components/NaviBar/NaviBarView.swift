@@ -21,9 +21,7 @@ struct NaviBarView: View {
     var body: some View {
         VStack(spacing: themeManager.layout.zero) {
             HStack {
-                if screenConfiguration.showBackButton {
-                    backButton
-                }
+                backButton.opacity(screenConfiguration.showBackButton ? 1 : 0)
                 Spacer()
                 Text(screenConfiguration.title)
                     .font(.headline)
