@@ -78,9 +78,16 @@ private extension HomeView {
 
 private extension HomeView {
     var favouriteArtistsView: some View {
-        return FavouriteArtistsView(vm.favouriteArtists) { artist in
-            router.route(to: HomeRoute.artistDetail(artist.id, .artist))
-        }
+        return HomeMediaSectionView(.init(
+            title: language("Home_A_01"),
+            medias: vm.favouriteArtists,
+            itemSize: ITEM_ARTIST_SIZE,
+            itemAlignment: .center,
+            itemShape: .circle,
+            itemImageContentMode: .fill,
+            onSelect: { media in
+                router.route(to: HomeRoute.artistDetail(media.id, .artist))
+            }))
     }
 
     var recentlyPlayedTracksView: some View {

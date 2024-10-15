@@ -49,11 +49,25 @@ extension ArtistItemViewData: IMediaItemData {
 
     func mapData(_ data: Any) {
         if let artist = data as? GetArtistEndpoint.Response {
-            id = artist.id
-            name = artist.name
-            images = artist.images?.map { ImageData($0) } ?? []
-            genres = artist.genres?.map { $0 } ?? []
-            numberOfFollowers = artist.followers?.total ?? 0
+            update(id: artist.id,
+                   name: artist.name,
+                   images: artist.images?.map { ImageData($0) } ?? [],
+                   genres: artist.genres?.map { $0 } ?? [],
+                   numberOfFollowers: artist.followers?.total ?? 0)
+        } else if let artist = data as? ArtistItemModel {
+            update(id: artist.id,
+                   name: artist.name,
+                   images: artist.images?.map { ImageData($0) } ?? [],
+                   genres: artist.genres?.map { $0 } ?? [],
+                   numberOfFollowers: artist.followers?.total ?? 0)
         }
+    }
+
+    private func update(id: String, name: String, images: [ImageData], genres: [String], numberOfFollowers: Int) {
+        self.id = id
+        self.name = name
+        self.images = images
+        self.genres = genres
+        self.numberOfFollowers = numberOfFollowers
     }
 }

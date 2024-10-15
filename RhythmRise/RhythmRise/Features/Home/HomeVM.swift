@@ -11,7 +11,7 @@ import RRCommon
 
 final class HomeVM: BaseViewModel {
     @Published var userAvatarUrl: String = ""
-    @Published var favouriteArtists: [ArtistItemViewData] = []
+    @Published var favouriteArtists: [MediaItemViewData] = []
     @Published var recentlyPlayedTracks: [TrackItemViewData] = []
     @Published var newReleases: [AlbumItemViewData] = []
     @Published var recommendations: [TrackItemViewData] = []
@@ -72,7 +72,13 @@ extension HomeVM {
                 guard let self = self else { return }
                 guard let artists = response.items else { return }
 
-                self.favouriteArtists = artists.map { ArtistItemViewData($0) }
+                let artistsMapping = artists.map {
+                    PlayerMediaFactory.mapping(type: .artist, data: $0)
+                }
+
+                self.favouriteArtists = artistsMapping.map {
+                    MediaItemViewData($0)
+                }
 
                 if self.favouriteArtists.count >= 5 {
                     self.apiGetRecommendations()
