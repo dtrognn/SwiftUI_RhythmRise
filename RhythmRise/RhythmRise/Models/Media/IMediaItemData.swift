@@ -8,6 +8,7 @@
 import Foundation
 
 enum MediaType {
+    case track
     case artist
     case album
     case playlist

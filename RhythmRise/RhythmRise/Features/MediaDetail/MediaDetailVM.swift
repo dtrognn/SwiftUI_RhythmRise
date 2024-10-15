@@ -55,7 +55,7 @@ extension MediaDetailVM {
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
 
-                let artistMapping = PlayerMediaFactory.mapping(type: .artist, data: response)
+                let artistMapping = MediaFactory.mapping(type: .artist, data: response)
                 self.media = MediaItemViewData(artistMapping)
 
                 if self.media != nil {
@@ -124,7 +124,7 @@ extension MediaDetailVM {
 
                 guard let tracksModel = response.tracks.items else { return }
 
-                let albumMapping = PlayerMediaFactory.mapping(type: .album, data: response)
+                let albumMapping = MediaFactory.mapping(type: .album, data: response)
                 self.media = MediaItemViewData(albumMapping)
                 self.media?.tracks = tracksModel.map { TrackItemViewData($0) }
                 self.objectWillChange.send()

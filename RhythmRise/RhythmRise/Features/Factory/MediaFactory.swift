@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PlayerMediaFactory {
+final class MediaFactory {
     static func mapping(type: MediaType, data: Any) -> IMediaItemData {
         var playerItemData: IMediaItemData
 
@@ -18,6 +18,8 @@ final class PlayerMediaFactory {
             playerItemData = AlbumItemViewData()
         case .playlist:
             playerItemData = PlaylistItemViewData()
+        case .track:
+            playerItemData = TrackItemViewData()
         default:
             // TODO: - Need refactor
             playerItemData = ArtistItemViewData()

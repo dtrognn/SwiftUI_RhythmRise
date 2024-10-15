@@ -91,21 +91,38 @@ private extension HomeView {
     }
 
     var recentlyPlayedTracksView: some View {
-        return RecentlyPlayedTrackView(vm.recentlyPlayedTracks) { track in
-            presentPlayer(track)
-        }
+        return HomeMediaSectionView(.init(
+            title: language("Home_A_02"),
+            medias: vm.recentlyPlayedTracks,
+            itemSize: ITEM_COMMON_SIZE,
+            itemShape: .rect,
+            onSelect: { _ in
+                // TODO:
+            }))
     }
 
     var newReleasesView: some View {
-        return NewReleasesView(vm.newReleases) { album in
-            router.route(to: HomeRoute.artistDetail(album.id, .album))
-        }
+        let displayName = AppDataManager.shared.userContext.displayName
+        return HomeMediaSectionView(.init(
+            title: language("Home_A_04"),
+            medias: vm.newReleases,
+            itemSize: ITEM_COMMON_SIZE,
+            itemShape: .rect,
+            onSelect: { media in
+                router.route(to: HomeRoute.artistDetail(media.id, .album))
+            }))
     }
 
     var recommendationsView: some View {
-        return RecommendationsView(vm.recommendations) { track in
-            presentPlayer(track)
-        }
+        let displayName = AppDataManager.shared.userContext.displayName
+        return HomeMediaSectionView(.init(
+            title: String(format: language("Home_A_05"), displayName),
+            medias: vm.recommendations,
+            itemSize: ITEM_COMMON_SIZE,
+            itemShape: .rect,
+            onSelect: { _ in
+                // TODO:
+            }))
     }
 
     func presentPlayer(_ track: TrackItemViewData) {

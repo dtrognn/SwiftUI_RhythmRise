@@ -12,9 +12,9 @@ import RRCommon
 final class HomeVM: BaseViewModel {
     @Published var userAvatarUrl: String = ""
     @Published var favouriteArtists: [MediaItemViewData] = []
-    @Published var recentlyPlayedTracks: [TrackItemViewData] = []
-    @Published var newReleases: [AlbumItemViewData] = []
-    @Published var recommendations: [TrackItemViewData] = []
+    @Published var recentlyPlayedTracks: [MediaItemViewData] = []
+    @Published var newReleases: [MediaItemViewData] = []
+    @Published var recommendations: [MediaItemViewData] = []
     @Published var popularPlaylists: [MediaItemViewData] = []
 
     private var isLoadFirst: Bool = true
@@ -73,7 +73,7 @@ extension HomeVM {
                 guard let artists = response.items else { return }
 
                 let artistsMapping = artists.map {
-                    PlayerMediaFactory.mapping(type: .artist, data: $0)
+                    MediaFactory.mapping(type: .artist, data: $0)
                 }
 
                 self.favouriteArtists = artistsMapping.map {
@@ -101,7 +101,12 @@ extension HomeVM {
                 guard let self = self else { return }
 
                 guard let recentlyPlayedTracks = response.items else { return }
-                self.recentlyPlayedTracks = recentlyPlayedTracks.map { TrackItemViewData($0.track) }
+                let tracksMapping = recentlyPlayedTracks.map {
+                    MediaFactory.mapping(type: .track, data: $0.track)
+                }
+                self.recentlyPlayedTracks = tracksMapping.map {
+                    MediaItemViewData($0)
+                }
             }.store(in: &cancellableSet)
     }
 
@@ -117,7 +122,10 @@ extension HomeVM {
                 guard let self = self else { return }
 
                 guard let items = response.albums.items else { return }
-                self.newReleases = items.map { AlbumItemViewData($0) }
+                let albumsMapping = items.map {
+                    MediaFactory.mapping(type: .album, data: $0)
+                }
+                self.newReleases = albumsMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 
@@ -147,7 +155,11 @@ extension HomeVM {
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
 
-                self.recommendations = response.tracks?.map { TrackItemViewData($0) } ?? []
+                guard let tracks = response.tracks else { return }
+                let tracksMapping = tracks.map {
+                    MediaFactory.mapping(type: .track, data: $0)
+                }
+                self.recommendations = tracksMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 
@@ -164,7 +176,7 @@ extension HomeVM {
 
                 guard let items = response.playlists.items else { return }
                 let playlistsMapping = items.map {
-                    PlayerMediaFactory.mapping(type: .playlist, data: $0)
+                    MediaFactory.mapping(type: .playlist, data: $0)
                 }
                 self.popularPlaylists = playlistsMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
