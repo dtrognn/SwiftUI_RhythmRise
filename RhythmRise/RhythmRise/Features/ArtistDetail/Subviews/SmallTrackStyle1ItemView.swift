@@ -1,5 +1,5 @@
 //
-//  SmallTrackItemView.swift
+//  SmallTrackStyle1ItemView.swift
 //  RhythmRise
 //
 //  Created by dtrognn on 13/10/24.
@@ -8,7 +8,7 @@
 import RRCommon
 import SwiftUI
 
-struct SmallTrackItemView: View {
+struct SmallTrackStyle1ItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     private var index: Int
     private var track: TrackItemViewData
@@ -42,7 +42,7 @@ struct SmallTrackItemView: View {
     }
 }
 
-private extension SmallTrackItemView {
+private extension SmallTrackStyle1ItemView {
     var indexText: some View {
         return Text("\(index)")
             .font(themeManager.font.regular14)

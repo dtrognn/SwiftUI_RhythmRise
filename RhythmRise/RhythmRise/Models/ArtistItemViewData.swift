@@ -30,16 +30,20 @@ class ArtistItemViewData: Identifiable, ObservableObject {
     }
 }
 
-extension ArtistItemViewData: IPlayerMedia {
+extension ArtistItemViewData: IMediaItemData {
     var imageUrl: String {
         return imageLargeUrl
+    }
+
+    var description: String? {
+        return String(format: "%d %@", numberOfFollowers, language("Media_Detail_A_01"))
     }
 
     var previewUrl: String {
         return ""
     }
 
-    var type: PlayerMediaType {
+    var type: MediaType {
         return .artist
     }
 

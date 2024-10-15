@@ -9,7 +9,7 @@ import RRCommon
 import SwiftUI
 
 enum HomeRoute: Route {
-    case artistDetail(String, PlayerMediaType)
+    case artistDetail(String, MediaType)
 }
 
 struct HomeRouterView: View {
@@ -21,7 +21,7 @@ struct HomeRouterView: View {
                 .navigationDestination(for: HomeRoute.self) { destination in
                     switch destination {
                     case .artistDetail(let id, let type):
-                        ArtistDetailView(id: id, playerMediaType: type)
+                        MediaDetailView(id: id, playerMediaType: type)
                     }
                 }
         }.environmentObject(router)

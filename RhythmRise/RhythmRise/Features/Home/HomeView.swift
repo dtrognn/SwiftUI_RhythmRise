@@ -84,8 +84,8 @@ private extension HomeView {
     }
 
     var newReleasesView: some View {
-        return NewReleasesView(vm.newReleases) { _ in
-            // TODO: -
+        return NewReleasesView(vm.newReleases) { album in
+            router.route(to: HomeRoute.artistDetail(album.id, .album))
         }
     }
 

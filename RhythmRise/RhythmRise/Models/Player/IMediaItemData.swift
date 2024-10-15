@@ -1,5 +1,5 @@
 //
-//  IPlayerMedia.swift
+//  IMediaItemData.swift
 //  RhythmRise
 //
 //  Created by dtrognn on 14/10/24.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-enum PlayerMediaType {
+enum MediaType {
     case artist
     case album
     case playlist
 }
 
-protocol IPlayerMedia {
+protocol IMediaItemData {
     var id: String { get }
-    var type: PlayerMediaType { get }
+    var type: MediaType { get }
     var name: String { get }
     var description: String? { get }
     var imageUrl: String { get }
@@ -24,7 +24,7 @@ protocol IPlayerMedia {
     func mapData(_ data: Any)
 }
 
-extension IPlayerMedia {
+extension IMediaItemData {
     var description: String? {
         return nil
     }
