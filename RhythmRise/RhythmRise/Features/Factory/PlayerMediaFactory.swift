@@ -16,6 +16,8 @@ final class PlayerMediaFactory {
             playerItemData = ArtistItemViewData()
         case .album:
             playerItemData = AlbumItemViewData()
+        case .playlist:
+            playerItemData = PlaylistItemViewData()
         default:
             // TODO: - Need refactor
             playerItemData = ArtistItemViewData()

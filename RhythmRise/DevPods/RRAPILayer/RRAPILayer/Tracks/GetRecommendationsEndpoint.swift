@@ -8,10 +8,6 @@
 import Foundation
 import RRCore
 
-public enum Market: String {
-    case vn = "VN"
-}
-
 public struct GetRecommendationsEndpoint: Endpoint {
     public static let service = GetRecommendationsEndpoint()
 

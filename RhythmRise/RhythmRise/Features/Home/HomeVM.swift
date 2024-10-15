@@ -15,6 +15,7 @@ final class HomeVM: BaseViewModel {
     @Published var recentlyPlayedTracks: [TrackItemViewData] = []
     @Published var newReleases: [AlbumItemViewData] = []
     @Published var recommendations: [TrackItemViewData] = []
+    @Published var popularPlaylists: [MediaItemViewData] = []
 
     private var isLoadFirst: Bool = true
 
@@ -28,6 +29,7 @@ final class HomeVM: BaseViewModel {
     private func loadDataAPI() {
         apiGetCurrentUserInfo()
         apiGetTopArtists()
+        apiGetFeaturedPlaylists()
         apiGetRecentlyPlayedTracks()
         apiGetNewReleases()
     }
@@ -140,6 +142,25 @@ extension HomeVM {
                 guard let self = self else { return }
 
                 self.recommendations = response.tracks?.map { TrackItemViewData($0) } ?? []
+            }.store(in: &cancellableSet)
+    }
+
+    // MARK: - Get featured playlists
+
+    private func apiGetFeaturedPlaylists() {
+        let params = GetFeaturedPlaylistEndpoint.Request()
+        GetFeaturedPlaylistEndpoint.service.request(parameters: params)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.handleError(error)
+            } receiveValue: { [weak self] response in
+                guard let self = self else { return }
+
+                guard let items = response.playlists.items else { return }
+                let playlistsMapping = items.map {
+                    PlayerMediaFactory.mapping(type: .playlist, data: $0)
+                }
+                self.popularPlaylists = playlistsMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 }

@@ -26,7 +26,7 @@ class ArtistItemViewData: Identifiable, ObservableObject {
     }
 
     var imageLargeUrl: String {
-        return images.max(by: { $0.width < $1.width })?.url ?? ""
+        return images.first?.url ?? ""
     }
 }
 

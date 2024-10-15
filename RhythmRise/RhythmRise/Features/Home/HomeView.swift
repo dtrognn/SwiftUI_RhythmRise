@@ -16,6 +16,9 @@ struct HomeView: View {
 
     @State private var presentPlayerView: Bool = false
 
+    private let ITEM_COMMON_SIZE: CGFloat = 130
+    private let ITEM_ARTIST_SIZE: CGFloat = 135
+
     var screenConfiguration: ScreenConfiguration {
         return .init(title: "", hidesBottomBarWhenPushed: false, showNaviBar: false)
     }
@@ -31,6 +34,9 @@ struct HomeView: View {
                         }
                         if !vm.recentlyPlayedTracks.isEmpty {
                             recentlyPlayedTracksView
+                        }
+                        if !vm.popularPlaylists.isEmpty {
+                            featuresPlaylistsView
                         }
                         if !vm.recommendations.isEmpty {
                             recommendationsView
@@ -98,5 +104,15 @@ private extension HomeView {
     func presentPlayer(_ track: TrackItemViewData) {
         playerManager.currentTrack = track
         presentPlayerView = true
+    }
+
+    var featuresPlaylistsView: some View {
+        return HomeMediaSectionView(.init(
+            title: language("Home_A_06"),
+            medias: vm.popularPlaylists,
+            itemSize: ITEM_COMMON_SIZE,
+            itemShape: .rect, onSelect: { _ in
+                //
+            }))
     }
 }

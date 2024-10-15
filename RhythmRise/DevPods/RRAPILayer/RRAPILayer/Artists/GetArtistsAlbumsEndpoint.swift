@@ -8,13 +8,6 @@
 import Foundation
 import RRCore
 
-public enum IncludeGroups: String, CaseIterable {
-    case album
-    case single
-    case appearsOn = "appears_on"
-    case compilation
-}
-
 public struct GetArtistsAlbumsEndpoint: Endpoint {
     public static func service(_ id: String) -> GetArtistsAlbumsEndpoint {
         var service = GetArtistsAlbumsEndpoint()
