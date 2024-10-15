@@ -105,6 +105,13 @@ extension MediaDetailVM {
         apiGetAlbum()
     }
 
+    func getAlbumsArtists() -> String {
+        if let album = media?.player as? AlbumItemViewData {
+            return album.artists.map { $0.name }.joined(separator: ", ")
+        }
+        return ""
+    }
+
     // TODO: - Get album
     private func apiGetAlbum() {
         let params = GetAlbumEndpoint.Request()

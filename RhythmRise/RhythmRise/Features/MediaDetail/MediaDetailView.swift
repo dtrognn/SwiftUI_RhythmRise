@@ -239,6 +239,7 @@ private extension MediaDetailView {
 
     var albumSubInfoView: some View {
         return VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
+            albumsArtistsView
             HStack(spacing: themeManager.layout.standardSpace) {
                 HStack(spacing: themeManager.layout.largeSpace) {
                     albumFollowButton
@@ -365,5 +366,11 @@ private extension MediaDetailView {
                 .applyTheme(themeManager.theme.textNoteColor)
                 .scaleEffect(1.3)
         }
+    }
+
+    var albumsArtistsView: some View {
+        return Text(vm.getAlbumsArtists())
+            .font(themeManager.font.regular16)
+            .foregroundStyle(themeManager.theme.textNoteColor)
     }
 }
