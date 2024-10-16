@@ -1,5 +1,5 @@
 //
-//  ArtistDetailAlbumItemView.swift
+//  SmallAlbumStyle1ItemView.swift
 //  RhythmRise
 //
 //  Created by dtrognn on 13/10/24.
@@ -8,20 +8,20 @@
 import RRCommon
 import SwiftUI
 
-struct ArtistDetailAlbumItemView: View {
+struct SmallAlbumStyle1ItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    private var album: AlbumItemViewData
-    private var onSelect: ((AlbumItemViewData) -> Void)?
+    private var media: MediaItemViewData
+    private var onSelect: ((MediaItemViewData) -> Void)?
 
-    init(_ album: AlbumItemViewData, onSelect: ((AlbumItemViewData) -> Void)? = nil) {
-        self.album = album
+    init(_ media: MediaItemViewData, onSelect: ((MediaItemViewData) -> Void)? = nil) {
+        self.media = media
         self.onSelect = onSelect
     }
 
     var body: some View {
         Button {
             Vibration.selection.vibrate()
-            onSelect?(album)
+            onSelect?(media)
         } label: {
             HStack(spacing: themeManager.layout.standardSpace) {
                 imageView
@@ -35,22 +35,22 @@ struct ArtistDetailAlbumItemView: View {
     }
 }
 
-private extension ArtistDetailAlbumItemView {
+private extension SmallAlbumStyle1ItemView {
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: album.imageUrl)) {
+        return ImageUrl(configuration: .init(urlString: media.imageUrl)) {
             ProgressView().applyTheme()
         }.frame(width: 75, height: 75)
     }
 
     var albumNameText: some View {
-        return Text(album.name)
+        return Text(media.name)
             .font(themeManager.font.medium16)
             .foregroundStyle(themeManager.theme.textNormalColor)
             .lineLimit(1)
     }
 
     var descriptionText: some View {
-        return Text(album.artists.map { $0.name }.joined(separator: ", "))
+        return Text(media.getArtistsFormat())
             .font(themeManager.font.regular14)
             .foregroundStyle(themeManager.theme.textNoteColor)
             .lineLimit(2)

@@ -131,25 +131,6 @@ final class PlayerManager: NSObject, ObservableObject {
 }
 
 extension PlayerManager {
-    func getArtistsFormat() -> String {
-        return getArtists().map { $0.name }.joined(separator: ", ")
-    }
-
-    private func getArtists() -> [ArtistItemViewData] {
-        switch currentMedia?.type {
-        case .track:
-            if let track = currentMedia?.player as? TrackItemViewData {
-                return track.artists
-            } else {
-                return []
-            }
-        default:
-            return []
-        }
-    }
-}
-
-extension PlayerManager {
     private func updatePlayingState(_ isPlaying: Bool) {
         self.isPlaying = isPlaying
         onUpdatePlayingState.send(self.isPlaying)

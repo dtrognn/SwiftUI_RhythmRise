@@ -10,12 +10,12 @@ import SwiftUI
 
 struct SmallTrackStyle2ItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    private var track: TrackItemViewData
-    private var onSelect: ((TrackItemViewData) -> Void)?
-    private var onSelectOption: ((TrackItemViewData) -> Void)?
+    private var media: MediaItemViewData
+    private var onSelect: ((MediaItemViewData) -> Void)?
+    private var onSelectOption: ((MediaItemViewData) -> Void)?
 
-    init(_ track: TrackItemViewData, onSelect: ((TrackItemViewData) -> Void)? = nil, onSelectOption: ((TrackItemViewData) -> Void)? = nil) {
-        self.track = track
+    init(_ media: MediaItemViewData, onSelect: ((MediaItemViewData) -> Void)? = nil, onSelectOption: ((MediaItemViewData) -> Void)? = nil) {
+        self.media = media
         self.onSelect = onSelect
         self.onSelectOption = onSelectOption
     }
@@ -23,7 +23,7 @@ struct SmallTrackStyle2ItemView: View {
     var body: some View {
         Button {
             Vibration.selection.vibrate()
-            onSelect?(track)
+            onSelect?(media)
         } label: {
             HStack(spacing: themeManager.layout.mediumSpace) {
                 VStack(alignment: .leading, spacing: themeManager.layout.smallSpace) {
@@ -39,14 +39,14 @@ struct SmallTrackStyle2ItemView: View {
 
 private extension SmallTrackStyle2ItemView {
     var titleText: some View {
-        return Text(track.name)
+        return Text(media.name)
             .font(themeManager.font.medium16)
             .foregroundStyle(themeManager.theme.textNormalColor)
             .lineLimit(1)
     }
 
     var descriptionText: some View {
-        return Text(track.artists.map { $0.name }.joined(separator: ", "))
+        return Text(media.getArtistsFormat())
             .font(themeManager.font.regular14)
             .foregroundStyle(themeManager.theme.textNoteColor)
             .lineLimit(2)
@@ -54,7 +54,7 @@ private extension SmallTrackStyle2ItemView {
 
     var moreButton: some View {
         return Button {
-            onSelectOption?(track)
+            onSelectOption?(media)
         } label: {
             Image(systemName: "ellipsis")
                 .applyTheme(.white)

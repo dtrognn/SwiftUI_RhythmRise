@@ -11,17 +11,17 @@ import SwiftUI
 struct SmallTrackStyle1ItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     private var index: Int
-    private var track: TrackItemViewData
-    private var onSelect: ((TrackItemViewData) -> Void)?
-    private var onSelectOption: ((TrackItemViewData) -> Void)?
+    private var media: MediaItemViewData
+    private var onSelect: ((MediaItemViewData) -> Void)?
+    private var onSelectOption: ((MediaItemViewData) -> Void)?
 
     init(index: Int,
-         track: TrackItemViewData,
-         onSelect: ((TrackItemViewData) -> Void)? = nil,
-         onSelectOption: ((TrackItemViewData) -> Void)? = nil)
+         media: MediaItemViewData,
+         onSelect: ((MediaItemViewData) -> Void)? = nil,
+         onSelectOption: ((MediaItemViewData) -> Void)? = nil)
     {
         self.index = index
-        self.track = track
+        self.media = media
         self.onSelect = onSelect
         self.onSelectOption = onSelectOption
     }
@@ -51,13 +51,13 @@ private extension SmallTrackStyle1ItemView {
     }
 
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: track.album?.imageUrl ?? "")) {
+        return ImageUrl(configuration: .init(urlString: media.imageUrl)) {
             ProgressView().applyTheme()
         }.frame(width: 50, height: 50)
     }
 
     var trackNameText: some View {
-        return Text(track.name)
+        return Text(media.name)
             .font(themeManager.font.regular16)
             .foregroundStyle(themeManager.theme.textNormalColor)
             .lineLimit(1)
@@ -65,7 +65,7 @@ private extension SmallTrackStyle1ItemView {
 
     var moreButton: some View {
         return Button {
-            onSelectOption?(track)
+            onSelectOption?(media)
         } label: {
             Image(systemName: "ellipsis")
                 .applyTheme(.white)
@@ -73,10 +73,16 @@ private extension SmallTrackStyle1ItemView {
     }
 
     var descriptionText: some View {
-        return Text(track.artists.map { $0.name }.joined(separator: ", "))
-            .font(themeManager.font.regular14)
-            .foregroundStyle(themeManager.theme.textNoteColor)
-            .lineLimit(2)
-            .multilineTextAlignment(.leading)
+        if let track = media.player as? TrackItemViewData {
+            let artists = track.artists.map { $0.name }.joined(separator: ", ")
+            return Text(artists)
+                .font(themeManager.font.regular14)
+                .foregroundStyle(themeManager.theme.textNoteColor)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .asAnyView
+        }
+
+        return EmptyView().asAnyView
     }
 }

@@ -177,7 +177,7 @@ private extension PlayerView {
     }
 
     var artistsText: some View {
-        return Text(playerManager.getArtistsFormat())
+        return Text(playerManager.currentMedia?.getArtistsFormat() ?? "")
             .font(themeManager.font.regular16)
             .foregroundStyle(themeManager.theme.textNoteColor)
     }

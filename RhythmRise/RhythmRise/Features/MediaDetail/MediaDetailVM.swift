@@ -76,7 +76,10 @@ extension MediaDetailVM {
                 guard let self = self else { return }
 
                 guard let tracks = response.tracks else { return }
-                self.media?.tracks = tracks.map { TrackItemViewData($0) }
+                let tracksMapping = tracks.map {
+                    MediaFactory.mapping(type: .track, data: $0)
+                }
+                self.media?.tracks = tracksMapping.map { MediaItemViewData($0) }
                 self.objectWillChange.send()
             }.store(in: &cancellableSet)
     }
@@ -92,7 +95,10 @@ extension MediaDetailVM {
                 guard let self = self else { return }
 
                 guard let items = response.items else { return }
-                self.media?.albums = items.map { AlbumItemViewData($0) }
+                let albumsMapping = items.map {
+                    MediaFactory.mapping(type: .album, data: $0)
+                }
+                self.media?.albums = albumsMapping.map { MediaItemViewData($0) }
                 self.objectWillChange.send()
             }.store(in: &cancellableSet)
     }
@@ -126,7 +132,11 @@ extension MediaDetailVM {
 
                 let albumMapping = MediaFactory.mapping(type: .album, data: response)
                 self.media = MediaItemViewData(albumMapping)
-                self.media?.tracks = tracksModel.map { TrackItemViewData($0) }
+
+                let tracksMapping = tracksModel.map {
+                    MediaFactory.mapping(type: .track, data: $0)
+                }
+                self.media?.tracks = tracksMapping.map { MediaItemViewData($0) }
                 self.objectWillChange.send()
             }.store(in: &cancellableSet)
     }
@@ -142,7 +152,7 @@ extension MediaDetailVM {
                 guard let self = self else { return }
 
                 guard let items = response.items else { return }
-                self.media?.tracks = items.map { TrackItemViewData($0) }
+//                self.media?.tracks = items.map { TrackItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 }

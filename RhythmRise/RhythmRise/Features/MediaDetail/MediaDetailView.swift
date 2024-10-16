@@ -292,8 +292,8 @@ private extension MediaDetailView {
         VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
             tracksPopularText
             LazyVStack(spacing: themeManager.layout.standardSpace) {
-                ForEach(Array(vm.media?.tracks?.enumerated() ?? [].enumerated()), id: \.0) { index, track in
-                    SmallTrackStyle1ItemView(index: index + 1, track: track)
+                ForEach(Array(vm.media?.tracks?.enumerated() ?? [].enumerated()), id: \.0) { index, media in
+                    SmallTrackStyle1ItemView(index: index + 1, media: media)
                 }
             }
         }.padding(.horizontal, themeManager.layout.standardSpace)
@@ -307,8 +307,8 @@ private extension MediaDetailView {
                 showAllButton
             }
             LazyVStack(spacing: themeManager.layout.standardSpace) {
-                ForEach(vm.media?.albums ?? []) { album in
-                    ArtistDetailAlbumItemView(album)
+                ForEach(vm.media?.albums ?? []) { media in
+                    SmallAlbumStyle1ItemView(media)
                 }
             }
         }.padding(.horizontal, themeManager.layout.standardSpace)
@@ -342,8 +342,8 @@ private extension MediaDetailView {
 private extension MediaDetailView {
     var albumsTracksView: some View {
         return LazyVStack(spacing: themeManager.layout.standardSpace) {
-            ForEach(vm.media?.tracks ?? []) { track in
-                SmallTrackStyle2ItemView(track)
+            ForEach(vm.media?.tracks ?? []) { media in
+                SmallTrackStyle2ItemView(media)
             }
         }.padding(.horizontal, themeManager.layout.standardSpace)
     }
