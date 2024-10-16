@@ -13,11 +13,7 @@ import RRCore
 final class PlayerManager: NSObject, ObservableObject {
     static var shared = PlayerManager()
 
-    @Published var currentTrack: TrackItemViewData? {
-        didSet {
-            duration = TimeInterval(currentTrack?.duration ?? 0)
-        }
-    }
+    @Published var currentMedia: MediaItemViewData?
 
     var minTime: TimeInterval = 0.0
     var realDuration: TimeInterval = 30.0
@@ -25,7 +21,7 @@ final class PlayerManager: NSObject, ObservableObject {
     var onUpdatePlayingState = PassthroughSubject<Bool, Never>()
 
     private var player: AVAudioPlayer?
-    private var tracksQueue: [TrackItemViewData] = []
+    private var tracksQueue: [MediaItemViewData] = []
     private var timer: Timer.TimerPublisher?
     private var cancellableSet: Set<AnyCancellable> = []
     private var duration: TimeInterval = 0.0
@@ -131,6 +127,25 @@ final class PlayerManager: NSObject, ObservableObject {
         #if DEBUG
             print("PLAYER MANAGER => \(message)")
         #endif
+    }
+}
+
+extension PlayerManager {
+    func getArtistsFormat() -> String {
+        return getArtists().map { $0.name }.joined(separator: ", ")
+    }
+
+    private func getArtists() -> [ArtistItemViewData] {
+        switch currentMedia?.type {
+        case .track:
+            if let track = currentMedia?.player as? TrackItemViewData {
+                return track.artists
+            } else {
+                return []
+            }
+        default:
+            return []
+        }
     }
 }
 

@@ -86,7 +86,7 @@ private extension HomeView {
             itemShape: .circle,
             itemImageContentMode: .fill,
             onSelect: { media in
-                router.route(to: HomeRoute.artistDetail(media.id, .artist))
+                router.route(to: HomeRoute.artistDetail(media.id, media.type))
             }))
     }
 
@@ -96,8 +96,8 @@ private extension HomeView {
             medias: vm.recentlyPlayedTracks,
             itemSize: ITEM_COMMON_SIZE,
             itemShape: .rect,
-            onSelect: { _ in
-                // TODO:
+            onSelect: { media in
+                presentPlayer(media)
             }))
     }
 
@@ -109,7 +109,7 @@ private extension HomeView {
             itemSize: ITEM_COMMON_SIZE,
             itemShape: .rect,
             onSelect: { media in
-                router.route(to: HomeRoute.artistDetail(media.id, .album))
+                router.route(to: HomeRoute.artistDetail(media.id, media.type))
             }))
     }
 
@@ -120,13 +120,13 @@ private extension HomeView {
             medias: vm.recommendations,
             itemSize: ITEM_COMMON_SIZE,
             itemShape: .rect,
-            onSelect: { _ in
-                // TODO:
+            onSelect: { media in
+                presentPlayer(media)
             }))
     }
 
-    func presentPlayer(_ track: TrackItemViewData) {
-        playerManager.currentTrack = track
+    func presentPlayer(_ media: MediaItemViewData) {
+        playerManager.currentMedia = media
         presentPlayerView = true
     }
 

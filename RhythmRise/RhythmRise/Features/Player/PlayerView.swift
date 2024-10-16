@@ -22,7 +22,7 @@ struct PlayerView: View {
 
     private var screenConfiguration: ScreenConfiguration {
         return .init(
-            title: playerManager.currentTrack?.name ?? "",
+            title: playerManager.currentMedia?.name ?? "",
             showBackButton: false,
             hidesBottomBarWhenPushed: true,
             showNaviUnderline: false,
@@ -36,7 +36,7 @@ struct PlayerView: View {
                     trackImageView.padding(.top, themeManager.layout.largeSpace)
 
                     VStack(alignment: .leading, spacing: themeManager.layout.smallSpace) {
-                        trackNameText
+                        mediaNameText
                         artistsText
                     }
 
@@ -45,7 +45,7 @@ struct PlayerView: View {
             }
         }.overlay(dismissButton, alignment: .topLeading)
             .onAppear {
-                playerManager.play(playerManager.currentTrack?.previewUrl ?? "")
+                playerManager.play(playerManager.currentMedia?.previewUrl ?? "")
             }.onReceive(playerManager.onUpdateCurrentTime) { currentTime in
                 self.currentTime = currentTime
             }.onReceive(playerManager.onUpdatePlayingState) { isPlaying in
@@ -155,16 +155,16 @@ private extension PlayerView {
     }
 
     var trackImageView: some View {
-        return ImageUrl(configuration: .init(urlString: playerManager.currentTrack?.album?.imageUrl ?? "")) {
+        return ImageUrl(configuration: .init(urlString: playerManager.currentMedia?.imageUrl ?? "")) {
             ProgressView().applyTheme()
         }.cornerRadius(themeManager.layout.standardCornerRadius)
             .aspectRatio(1, contentMode: .fill)
     }
 
-    var trackNameText: some View {
+    var mediaNameText: some View {
         return Marquee {
             HStack {
-                Text(playerManager.currentTrack?.name ?? "")
+                Text(playerManager.currentMedia?.name ?? "")
                     .font(themeManager.font.semibold24)
                     .foregroundStyle(themeManager.theme.textNormalColor)
             }
@@ -177,7 +177,7 @@ private extension PlayerView {
     }
 
     var artistsText: some View {
-        return Text(playerManager.currentTrack?.artists.map { $0.name }.joined(separator: ", ") ?? "")
+        return Text(playerManager.getArtistsFormat())
             .font(themeManager.font.regular16)
             .foregroundStyle(themeManager.theme.textNoteColor)
     }
