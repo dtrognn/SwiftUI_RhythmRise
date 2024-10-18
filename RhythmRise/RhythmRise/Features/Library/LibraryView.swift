@@ -20,7 +20,10 @@ struct LibraryView: View {
     var body: some View {
         ScreenContainerView(screenConfiguration) {
             VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
-                headerView
+                VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
+                    headerView
+                    mediaTypesView
+                }
 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
@@ -84,6 +87,26 @@ private extension LibraryView {
 }
 
 private extension LibraryView {
+    var mediaTypesView: some View {
+        return ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: themeManager.layout.standardSpace) {
+                ForEach(vm.mediaTypes, id: \.self) { type in
+                    Button {
+                        // TODO: -
+                    } label: {
+                        Text(language(type.title))
+                            .font(themeManager.font.regular14)
+                            .foregroundStyle(themeManager.theme.textNormalColor)
+                            .padding(.vertical, themeManager.layout.mediumSpace)
+                            .padding(.horizontal, themeManager.layout.standardSpace)
+                            .background(themeManager.theme.iconOffColor)
+                            .cornerRadius(themeManager.layout.standardSpace)
+                    }
+                }
+            }
+        }.fixedSize(horizontal: false, vertical: true)
+    }
+
     var savedList: some View {
         return LazyVStack(spacing: themeManager.layout.standardSpace) {
             ForEach(vm.recents) { media in
