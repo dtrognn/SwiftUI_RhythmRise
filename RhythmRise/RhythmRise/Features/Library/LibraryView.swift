@@ -19,15 +19,67 @@ struct LibraryView: View {
 
     var body: some View {
         ScreenContainerView(screenConfiguration) {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    savedList
-                }.padding(.all, themeManager.layout.standardSpace)
-                    .padding(.bottom, 3 * themeManager.layout.standardButtonHeight)
-            }
+            VStack(alignment: .leading, spacing: themeManager.layout.standardSpace) {
+                headerView
+
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        savedList
+                    }.padding(.bottom, 3 * themeManager.layout.standardButtonHeight)
+                }
+            }.padding(.all, themeManager.layout.standardSpace)
         }.onAppear {
             vm.loadData()
         }
+    }
+}
+
+private extension LibraryView {
+    var headerView: some View {
+        return HStack(spacing: themeManager.layout.mediumSpace) {
+            HStack(spacing: themeManager.layout.standardSpace) {
+                avatarImage
+                libraryText
+            }
+            Spacer()
+            HStack(spacing: themeManager.layout.largeSpace) {
+                searchButton
+                addButton
+            }
+        }
+    }
+
+    var avatarImage: some View {
+        return ImageUrl(configuration: .init(urlString: AppDataManager.shared.userContext.imageUrl)) {
+            ProgressView().applyTheme()
+        }.frame(width: 35, height: 35)
+            .clipShape(.circle)
+    }
+
+    var searchButton: some View {
+        return Button {
+            // TODO: -
+        } label: {
+            Image.image("ic_tabbar_search")
+                .applyTheme(.white)
+                .scaleEffect(1.3)
+        }
+    }
+
+    var addButton: some View {
+        return Button {
+            // TODO: -
+        } label: {
+            Image(systemName: "plus")
+                .applyTheme(.white)
+                .scaleEffect(1.5)
+        }
+    }
+
+    var libraryText: some View {
+        return Text(language("Library_A_01"))
+            .font(themeManager.font.medium24)
+            .foregroundStyle(themeManager.theme.textNormalColor)
     }
 }
 
