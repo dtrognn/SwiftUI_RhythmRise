@@ -14,8 +14,6 @@ struct HomeView: View {
     @EnvironmentObject private var playerManager: PlayerManager
     @StateObject private var vm = HomeVM()
 
-    @State private var presentPlayerView: Bool = false
-
     private let ITEM_COMMON_SIZE: CGFloat = 130
     private let ITEM_ARTIST_SIZE: CGFloat = 135
 
@@ -47,9 +45,7 @@ struct HomeView: View {
                     }.padding(.bottom, themeManager.layout.standardButtonHeight * 4)
                 }
             }
-        }.fullScreenCover(isPresented: $presentPlayerView, content: {
-            PlayerView($presentPlayerView)
-        }).onAppear {
+        }.onAppear {
             vm.loadData()
         }
     }
@@ -127,7 +123,6 @@ private extension HomeView {
 
     func presentPlayer(_ media: MediaItemViewData) {
         playerManager.currentMedia = media
-        presentPlayerView = true
     }
 
     var featuresPlaylistsView: some View {

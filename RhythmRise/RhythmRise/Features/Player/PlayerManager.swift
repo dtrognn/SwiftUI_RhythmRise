@@ -13,10 +13,19 @@ import RRCore
 final class PlayerManager: NSObject, ObservableObject {
     static var shared = PlayerManager()
 
-    @Published var currentMedia: MediaItemViewData?
+    @Published var currentMedia: MediaItemViewData? {
+        didSet {
+            play(currentMedia?.previewUrl ?? "")
+            isShowMiniPlayer = true
+            onUpdateMedia.send(())
+        }
+    }
+
+    @Published var isShowMiniPlayer: Bool = false
 
     var minTime: TimeInterval = 0.0
     var realDuration: TimeInterval = 30.0
+    var onUpdateMedia = PassthroughSubject<Void, Never>()
     var onUpdateCurrentTime = PassthroughSubject<TimeInterval, Never>()
     var onUpdatePlayingState = PassthroughSubject<Bool, Never>()
 

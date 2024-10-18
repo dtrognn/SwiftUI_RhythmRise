@@ -24,7 +24,7 @@ struct TabItem: View {
                 .foregroundStyle(self.colorSelection)
         } icon: {
             Image(self.tab.image)
-                .applyTheme(colorSelection)
+                .applyTheme(self.colorSelection)
         }.environment(\.locale, .init(identifier: self.languageIdentifier))
             .onReceive(LanguageManager.shared.onChangeLanguageBundle) { languageCode in
                 self.languageIdentifier = languageCode.getLanguageCode()
@@ -34,10 +34,32 @@ struct TabItem: View {
 
 struct TabbarRouterView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var playerManager: PlayerManager
     @State private var activeTab: Tab = .home
+    @State private var presentPlayerView: Bool = false
 
     var body: some View {
-        TabView(selection: self.$activeTab) {
+        ZStack {
+            self.tabView
+
+            VStack(spacing: self.themeManager.layout.zero) {
+                Spacer()
+
+                if self.playerManager.isShowMiniPlayer {
+                    MiniPlayerView {
+                        self.presentPlayerView = true
+                    }
+                }
+            }.padding(.bottom, UITabBarController().height + self.themeManager.layout.smallSpace)
+                .transition(.move(edge: .bottom))
+                .animation(.default, value: self.playerManager.isShowMiniPlayer)
+        }.fullScreenCover(isPresented: self.$presentPlayerView, content: {
+            PlayerView(self.$presentPlayerView)
+        })
+    }
+
+    var tabView: some View {
+        return TabView(selection: self.$activeTab) {
             HomeRouterView()
                 .tabItem {
                     TabItem(.home)

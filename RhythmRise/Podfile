@@ -9,6 +9,8 @@ target 'RhythmRise' do
   pod 'RRAPILayer', :path => 'DevPods/RRAPILayer'
   pod 'RRAuthentication', :path => 'DevPods/RRAuthentication'
 
+  pod 'UIImageColors'
+
   post_install do |installer|
       installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
