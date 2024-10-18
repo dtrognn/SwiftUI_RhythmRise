@@ -45,7 +45,7 @@ struct PlayerView: View {
             }
         }.overlay(dismissButton, alignment: .topLeading)
             .onAppear {
-                playerManager.play(playerManager.currentMedia?.previewUrl ?? "")
+                self.isPlaying = playerManager.getPlayingState()
             }.onReceive(playerManager.onUpdateCurrentTime) { currentTime in
                 self.currentTime = currentTime
             }.onReceive(playerManager.onUpdatePlayingState) { isPlaying in

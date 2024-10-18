@@ -9,7 +9,7 @@ import Foundation
 import RRAPILayer
 
 final class SearchVM: BaseViewModel {
-    @Published var severalBrowseCategories: [BrowseCategoryItemViewData] = []
+    @Published var severalBrowseCategories: [MediaItemViewData] = []
 
     private var isLoadFirst: Bool = true
 
@@ -30,7 +30,10 @@ final class SearchVM: BaseViewModel {
                 guard let self = self else { return }
 
                 guard let items = response.categories.items else { return }
-                self.severalBrowseCategories = items.map { BrowseCategoryItemViewData($0) }
+                let browseCategoriesMapping = items.map {
+                    MediaFactory.mapping(type: .browseCatgory, data: $0)
+                }
+                self.severalBrowseCategories = browseCategoriesMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 }

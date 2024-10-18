@@ -9,9 +9,9 @@ import Foundation
 import RRAPILayer
 
 class BrowseCategoryItemViewData: Identifiable, Hashable {
-    var id: String
-    var name: String
-    var images: [ImageData]
+    var id: String = UUID().uuidString
+    var name: String = ""
+    var images: [ImageData] = []
 
     static func == (lhs: BrowseCategoryItemViewData, rhs: BrowseCategoryItemViewData) -> Bool {
         return lhs.id == rhs.id
@@ -21,6 +21,8 @@ class BrowseCategoryItemViewData: Identifiable, Hashable {
         hasher.combine(id)
     }
 
+    init() {}
+
     init(_ category: GetSeveralBrowseCategoriesEndpoint.CategoryItemModel) {
         self.id = category.id
         self.name = category.name
@@ -29,5 +31,29 @@ class BrowseCategoryItemViewData: Identifiable, Hashable {
 
     var imageUrl: String {
         return images.first?.url ?? ""
+    }
+}
+
+extension BrowseCategoryItemViewData: IMediaItemData {
+    var type: MediaType {
+        return .browseCatgory
+    }
+
+    var previewUrl: String {
+        return ""
+    }
+
+    func mapData(_ data: Any) {
+        if let category = data as? GetSeveralBrowseCategoriesEndpoint.CategoryItemModel {
+            update(id: category.id,
+                   name: category.name,
+                   images: category.icons?.map { ImageData($0) } ?? [])
+        }
+    }
+
+    private func update(id: String, name: String, images: [ImageData]) {
+        self.id = id
+        self.name = name
+        self.images = images
     }
 }

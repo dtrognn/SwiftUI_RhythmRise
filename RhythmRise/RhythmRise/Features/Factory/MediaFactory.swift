@@ -20,6 +20,8 @@ final class MediaFactory {
             playerItemData = PlaylistItemViewData()
         case .track:
             playerItemData = TrackItemViewData()
+        case .browseCatgory:
+            playerItemData = BrowseCategoryItemViewData()
         default:
             // TODO: - Need refactor
             playerItemData = ArtistItemViewData()

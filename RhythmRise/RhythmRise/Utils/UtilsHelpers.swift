@@ -6,6 +6,8 @@
 //
 
 import Combine
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import RRCommon
 import SwiftUI
 import UIImageColors
@@ -17,6 +19,7 @@ final class UtilsHelpers {
         return fetchDominantColor(from: imageUrlString)
     }
 
+    // using combine
     private static func fetchDominantColor(from imageUrlString: String) -> AnyPublisher<UIColor?, Never> {
         guard let imageUrl = URL(string: imageUrlString) else {
             return Just(nil).eraseToAnyPublisher()
@@ -40,5 +43,24 @@ final class UtilsHelpers {
             }.replaceError(with: nil)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+    }
+
+    static func fetchDominantColor(from imageUrlString: String, completion: @escaping (UIColor?) -> Void) {
+        guard let imageUrl = URL(string: imageUrlString) else {
+            completion(nil)
+            return
+        }
+
+        URLSession.shared.dataTask(with: imageUrl) { data, _, error in
+            guard let data = data, error == nil, let image = UIImage(data: data) else {
+                completion(nil)
+                return
+            }
+
+            let colors = image.getColors()
+            DispatchQueue.main.async {
+                completion(colors?.secondary)
+            }
+        }.resume()
     }
 }

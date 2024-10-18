@@ -12,6 +12,7 @@ enum MediaType {
     case artist
     case album
     case playlist
+    case browseCatgory
 }
 
 protocol IMediaItemData {

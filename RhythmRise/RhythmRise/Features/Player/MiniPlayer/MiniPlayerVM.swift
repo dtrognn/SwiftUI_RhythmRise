@@ -16,17 +16,15 @@ final class MiniPlayerVM: BaseViewModel {
     }
 
     func getBackgroundColor(from imageUrlString: String) {
-        UtilsHelpers.getDominantColor(from: imageUrlString)
-            .sink { [weak self] uiColor in
-                guard let self = self else { return }
-
-                guard let uiColor = uiColor else {
-                    self.backgroundColor = ThemeManager.shared.theme.backgroundColor
-                    return
-                }
-
-                self.backgroundColor = Color(uiColor: uiColor)
-            }.store(in: &cancellableSet)
+        UtilsHelpers.fetchDominantColor(from: imageUrlString) { [weak self] uiColor in
+            guard let uiColor = uiColor else {
+                self?.backgroundColor = ThemeManager.shared.theme.backgroundColor
+                return
+            }
+            withAnimation(.easeInOut(duration: 0.2)) {
+                self?.backgroundColor = Color(uiColor: uiColor)
+            }
+        }
     }
 }
 

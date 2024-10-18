@@ -10,18 +10,18 @@ import SwiftUI
 
 struct BrowseCategoryItemView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    private var browseCategory: BrowseCategoryItemViewData
-    private var onSelect: (BrowseCategoryItemViewData) -> Void
+    private var media: MediaItemViewData
+    private var onSelect: (MediaItemViewData) -> Void
 
-    init(_ browseCategory: BrowseCategoryItemViewData, onSelect: @escaping (BrowseCategoryItemViewData) -> Void) {
-        self.browseCategory = browseCategory
+    init(_ media: MediaItemViewData, onSelect: @escaping (MediaItemViewData) -> Void) {
+        self.media = media
         self.onSelect = onSelect
     }
 
     var body: some View {
         Button {
             Vibration.selection.vibrate()
-            onSelect(browseCategory)
+            onSelect(media)
         } label: {
             VStack {
                 VStack(spacing: themeManager.layout.zero) {
@@ -39,14 +39,14 @@ struct BrowseCategoryItemView: View {
 
 private extension BrowseCategoryItemView {
     var titleText: some View {
-        return Text(browseCategory.name)
+        return Text(media.name)
             .font(themeManager.font.medium16)
             .foregroundStyle(themeManager.theme.textWhiteColor)
             .padding([.leading, .vertical], themeManager.layout.standardSpace)
     }
 
     var imageView: some View {
-        return ImageUrl(configuration: .init(urlString: browseCategory.imageUrl)) {
+        return ImageUrl(configuration: .init(urlString: media.imageUrl)) {
             ProgressView().applyTheme()
         }.frame(width: 60, height: 60)
             .cornerRadius(themeManager.layout.standardCornerRadius)

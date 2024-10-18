@@ -5,7 +5,7 @@
 //  Created by dtrognn on 14/10/24.
 //
 
-import Foundation
+import SwiftUI
 
 class MediaItemViewData: Identifiable, ObservableObject {
     var id: String { player.id }
@@ -17,17 +17,31 @@ class MediaItemViewData: Identifiable, ObservableObject {
 
     @Published var tracks: [MediaItemViewData]?
     @Published var albums: [MediaItemViewData]?
+    @Published var color: Color = .red
 
     var player: IMediaItemData
 
     init(_ player: IMediaItemData) {
         self.player = player
+        fetchColor()
     }
 }
 
 extension MediaItemViewData {
     func getArtistsFormat() -> String {
         return getArtists().map { $0.name }.joined(separator: ", ")
+    }
+
+    private func fetchColor() {
+        UtilsHelpers.fetchDominantColor(from: imageUrl) { [weak self] uiColor in
+            guard let self = self else { return }
+
+            guard let uiColor = uiColor else {
+                self.color = .red
+                return
+            }
+            self.color = Color(uiColor: uiColor)
+        }
     }
 
     private func getArtists() -> [ArtistItemViewData] {

@@ -15,9 +15,9 @@ final class PlayerManager: NSObject, ObservableObject {
 
     @Published var currentMedia: MediaItemViewData? {
         didSet {
-            play(currentMedia?.previewUrl ?? "")
-            isShowMiniPlayer = true
             onUpdateMedia.send(())
+            isShowMiniPlayer = true
+            play(currentMedia?.previewUrl ?? "")
         }
     }
 
@@ -43,6 +43,10 @@ final class PlayerManager: NSObject, ObservableObject {
     override init() {
         super.init()
         configureAudioSession()
+    }
+
+    func getPlayingState() -> Bool {
+        return player?.isPlaying ?? false
     }
 
     func toggleState() {

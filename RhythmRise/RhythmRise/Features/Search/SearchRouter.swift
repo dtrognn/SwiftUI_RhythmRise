@@ -5,11 +5,11 @@
 //  Created by dtrognn on 12/10/24.
 //
 
-import SwiftUI
 import RRCommon
+import SwiftUI
 
 enum SearchRoute: Route {
-    case singleBrowseCategory(BrowseCategoryItemViewData)
+    case categorysPlaylists
 }
 
 struct SearchRouterView: View {
@@ -20,8 +20,8 @@ struct SearchRouterView: View {
             SearchView()
                 .navigationDestination(for: SearchRoute.self) { destination in
                     switch destination {
-                    case .singleBrowseCategory(let params):
-                        SingleBrowseCategoryView(params)
+                    case .categorysPlaylists:
+                        CategorysPlaylistsView()
                     }
                 }
         }.environmentObject(router)
