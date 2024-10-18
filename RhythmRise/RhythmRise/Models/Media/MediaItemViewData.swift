@@ -29,7 +29,7 @@ class MediaItemViewData: Identifiable, ObservableObject {
 
 extension MediaItemViewData {
     func getArtistsFormat() -> String {
-        return getArtists().map { $0.name }.joined(separator: ", ")
+        return getArtists().joined(separator: ", ")
     }
 
     private func fetchColor() {
@@ -44,15 +44,19 @@ extension MediaItemViewData {
         }
     }
 
-    private func getArtists() -> [ArtistItemViewData] {
+    private func getArtists() -> [String] {
         switch type {
         case .track:
             if let track = player as? TrackItemViewData {
-                return track.artists
+                return track.artists.map { $0.name }
             }
         case .album:
             if let album = player as? AlbumItemViewData {
-                return album.artists
+                return album.artists.map { $0.name }
+            }
+        case .show:
+            if let show = player as? ShowItemViewData {
+                return [show.publisher]
             }
         default:
             return []

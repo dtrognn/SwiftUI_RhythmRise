@@ -18,3 +18,9 @@
 "Media_Detail_A_02" = "Popular";
 "Media_Detail_A_03" = "Releases";
 "Media_Detail_A_04" = "Release date";
+
+"Media_Type_A_01" = "Track";
+"Media_Type_A_02" = "Artist";
+"Media_Type_A_03" = "Album";
+"Media_Type_A_04" = "Playlist";
+"Media_Type_A_05" = "Podcast";

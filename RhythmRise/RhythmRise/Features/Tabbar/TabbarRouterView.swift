@@ -70,7 +70,7 @@ struct TabbarRouterView: View {
                     TabItem(.search)
                 }.tag(Tab.search)
 
-            LibraryView()
+            LibraryRouter()
                 .tabItem {
                     TabItem(.library)
                 }.tag(Tab.library)

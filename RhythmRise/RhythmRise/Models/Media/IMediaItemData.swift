@@ -7,12 +7,30 @@
 
 import Foundation
 
-enum MediaType {
+enum MediaType: String {
     case track
     case artist
     case album
     case playlist
     case browseCatgory
+    case show
+
+    var title: String {
+        return switch self {
+        case .track:
+            "Media_Type_A_01"
+        case .artist:
+            "Media_Type_A_02"
+        case .album:
+            "Media_Type_A_03"
+        case .playlist:
+            "Media_Type_A_04"
+        case .browseCatgory:
+            ""
+        case .show:
+            "Media_Type_A_05"
+        }
+    }
 }
 
 protocol IMediaItemData {

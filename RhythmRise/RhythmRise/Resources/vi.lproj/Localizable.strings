@@ -18,3 +18,9 @@
 "Media_Detail_A_02" = "Phổ biến";
 "Media_Detail_A_03" = "Bản phát hành phổ biến";
 "Media_Detail_A_04" = "Ngày phát hành";
+
+"Media_Type_A_01" = "Bài hát";
+"Media_Type_A_02" = "Ca sĩ";
+"Media_Type_A_03" = "Đĩa đơn";
+"Media_Type_A_04" = "Danh sách phát";
+"Media_Type_A_05" = "Podcast";
