@@ -9,7 +9,7 @@ import RRCommon
 import SwiftUI
 
 enum SearchRoute: Route {
-    case categorysPlaylists
+    case categorysPlaylists(String)
 }
 
 struct SearchRouterView: View {
@@ -20,8 +20,8 @@ struct SearchRouterView: View {
             SearchView()
                 .navigationDestination(for: SearchRoute.self) { destination in
                     switch destination {
-                    case .categorysPlaylists:
-                        CategorysPlaylistsView()
+                    case .categorysPlaylists(let categoryId):
+                        CategorysPlaylistsView(categoryId)
                     }
                 }
         }.environmentObject(router)

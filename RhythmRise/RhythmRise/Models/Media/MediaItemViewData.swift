@@ -23,7 +23,7 @@ class MediaItemViewData: Identifiable, ObservableObject {
 
     init(_ player: IMediaItemData) {
         self.player = player
-        fetchColor()
+//        fetchColor()
     }
 }
 
