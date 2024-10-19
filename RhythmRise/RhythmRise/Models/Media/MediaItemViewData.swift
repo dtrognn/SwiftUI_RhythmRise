@@ -17,6 +17,7 @@ class MediaItemViewData: Identifiable, ObservableObject {
 
     @Published var tracks: [MediaItemViewData]?
     @Published var albums: [MediaItemViewData]?
+    @Published var episodes: [MediaItemViewData]?
     @Published var color: Color = .red
 
     var player: IMediaItemData

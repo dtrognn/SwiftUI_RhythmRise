@@ -8,7 +8,9 @@
 import RRCommon
 import SwiftUI
 
-enum LibraryRoute: Route {}
+enum LibraryRoute: Route {
+    case showDetail(String)
+}
 
 struct LibraryRouter: View {
     @StateObject private var router = Router()
@@ -17,7 +19,10 @@ struct LibraryRouter: View {
         NavigationStack(path: $router.navigationPath) {
             LibraryView()
                 .navigationDestination(for: LibraryRoute.self) { destination in
-
+                    switch destination {
+                    case .showDetail(let id):
+                        ShowDetailView(id)
+                    }
                 }
         }.environmentObject(router)
     }

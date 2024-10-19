@@ -14,6 +14,7 @@ enum MediaType: String {
     case playlist
     case browseCatgory
     case show
+    case episode
 
     var title: String {
         return switch self {
@@ -29,6 +30,8 @@ enum MediaType: String {
             ""
         case .show:
             "Media_Type_A_05"
+        case .episode:
+            ""
         }
     }
 }

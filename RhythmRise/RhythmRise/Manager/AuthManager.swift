@@ -16,6 +16,7 @@ final class AuthManager {
         case userFollowRead = "user-follow-read"
         case userLibraryModify = "user-library-modify"
         case userLibraryRead = "user-library-read"
+        case userReadPlaybackPosition = "user-read-playback-position"
         case userTopRead = "user-top-read"
         case userReadRecentlyPlayed = "user-read-recently-played"
         case playlistModifyPublic = "playlist-modify-public"

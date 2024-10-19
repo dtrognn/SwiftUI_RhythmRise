@@ -110,7 +110,14 @@ private extension LibraryView {
     var savedList: some View {
         return LazyVStack(spacing: themeManager.layout.standardSpace) {
             ForEach(vm.recents) { media in
-                LibraryMediaItemView(media)
+                LibraryMediaItemView(media) { mediaSelected in
+                    switch mediaSelected.type {
+                    case .show:
+                        router.route(to: LibraryRoute.showDetail(mediaSelected.id))
+                    default:
+                        return
+                    }
+                }
             }
         }
     }

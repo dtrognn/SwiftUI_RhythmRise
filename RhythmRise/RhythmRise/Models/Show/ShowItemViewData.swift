@@ -52,6 +52,14 @@ extension ShowItemViewData: IMediaItemData {
                    uri: show.uri,
                    publisher: show.publisher,
                    images: show.images?.map { ImageData($0) } ?? [])
+        } else if let show = data as? GetShowEndpoint.Response {
+            update(id: show.id,
+                   name: show.name,
+                   description: show.description,
+                   mediaType: "",
+                   uri: show.uri,
+                   publisher: show.publisher,
+                   images: show.images?.map { ImageData($0) } ?? [])
         }
     }
 
