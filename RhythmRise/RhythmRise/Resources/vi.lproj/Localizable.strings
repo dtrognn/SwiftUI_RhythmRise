@@ -6,6 +6,9 @@
 
 "Common_A_01" = "Theo dõi";
 "Common_A_02" = "Hiện tất cả";
+"Common_A_03" = "Đang theo dõi";
+"Common_A_04" = "phút";
+"Common_A_05" = "giây";
 
 "Home_A_01" = "Nghệ sĩ yêu thích của bạn";
 "Home_A_02" = "Gần đây";
@@ -26,3 +29,5 @@
 "Media_Type_A_05" = "Podcast";
 
 "Library_A_01" = "Thư viện";
+
+"Show_Detail_A_01" = "Tất cả các tập";

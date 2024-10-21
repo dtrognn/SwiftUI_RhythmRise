@@ -8,8 +8,10 @@
 import SwiftUI
 
 public struct StraightLineView: View {
+    public init() {}
+
     public var body: some View {
         Divider().frame(height: 1)
-            .foregroundColor(Color.gray)
+            .overlay(ThemeManager.shared.theme.textNoteColor)
     }
 }

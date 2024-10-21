@@ -6,6 +6,9 @@
 
 "Common_A_01" = "Follow";
 "Common_A_02" = "Show all";
+"Common_A_03" = "Following";
+"Common_A_04" = "min";
+"Common_A_05" = "sec";
 
 "Home_A_01" = "Your favourite artists";
 "Home_A_02" = "Recently";
@@ -26,3 +29,5 @@
 "Media_Type_A_05" = "Podcast";
 
 "Library_A_01" = "Library";
+
+"Show_Detail_A_01" = "All Episodes";

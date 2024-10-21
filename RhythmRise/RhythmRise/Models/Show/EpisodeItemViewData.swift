@@ -11,7 +11,7 @@ import RRAPILayer
 class EpisodeItemViewData: Identifiable, ObservableObject {
     var id: String = UUID().uuidString
     var name: String = ""
-    var description: String = ""
+    var des: String = ""
     var uri: String = ""
     var audioPreviewUrl: String = ""
     var resumePoint: ResumePointData = .init()
@@ -24,7 +24,7 @@ class EpisodeItemViewData: Identifiable, ObservableObject {
     init(_ episode: EpisodeItemData) {
         self.id = episode.id
         self.name = episode.name
-        self.description = episode.description
+        self.des = episode.description
         self.uri = episode.uri
         self.audioPreviewUrl = episode.audioPreviewUrl
         self.resumePoint = ResumePointData(episode.resumePoint)
@@ -37,6 +37,10 @@ class EpisodeItemViewData: Identifiable, ObservableObject {
 extension EpisodeItemViewData: IMediaItemData {
     var type: MediaType {
         return .episode
+    }
+
+    var description: String? {
+        return des
     }
 
     var imageUrl: String {
@@ -64,7 +68,7 @@ extension EpisodeItemViewData: IMediaItemData {
     private func update(id: String, name: String, description: String, uri: String, audioPreviewUrl: String, resumePoint: ResumePointData, durationMs: Int, images: [ImageData], releaseDate: String) {
         self.id = id
         self.name = name
-        self.description = description
+        self.des = description
         self.uri = uri
         self.audioPreviewUrl = audioPreviewUrl
         self.resumePoint = resumePoint

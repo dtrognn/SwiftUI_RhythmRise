@@ -13,6 +13,9 @@ import SwiftUI
 import UIImageColors
 
 final class UtilsHelpers {
+    private static let numberOfSecondInMinute: Int = 60
+    private static let numberOfSecondInHour: Int = 60 * 60
+
     init() {}
 
     static func getDominantColor(from imageUrlString: String) -> AnyPublisher<UIColor?, Never> {
@@ -62,5 +65,21 @@ final class UtilsHelpers {
                 completion(colors?.secondary)
             }
         }.resume()
+    }
+}
+
+extension UtilsHelpers {
+    static func formatTimeForEpisode(from duration: Int) -> String {
+        let durs = (duration < 1000) ? duration : (duration / 1000)
+        let hrs = Int(durs) / 3600
+        let mins = Int(durs) / 60 % 60
+        let secs = Int(durs) % 60
+
+        switch durs {
+        case 0 ..< numberOfSecondInMinute:
+            return String(format: "%d %@", secs, language("Common_A_05"))
+        default:
+            return String(format: "%d %@", mins, language("Common_A_04"))
+        }
     }
 }

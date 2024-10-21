@@ -9,8 +9,10 @@ import Foundation
 import RRAPILayer
 
 final class ShowDetailVM: BaseViewModel {
-    @Published var show: MediaItemViewData?
     private var id: String
+
+    @Published var show: MediaItemViewData?
+    @Published var episodes: [MediaItemViewData] = []
 
     init(_ id: String) {
         self.id = id
@@ -34,9 +36,14 @@ extension ShowDetailVM {
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
 
-//                guard let
                 let showMapping = MediaFactory.mapping(type: .show, data: response)
                 self.show = MediaItemViewData(showMapping)
+
+                guard let episodes = response.episodes.items else { return }
+                let episodesMapping = episodes.map {
+                    MediaFactory.mapping(type: .episode, data: $0)
+                }
+                self.episodes = episodesMapping.map { MediaItemViewData($0) }
             }.store(in: &cancellableSet)
     }
 }

@@ -11,7 +11,7 @@ import RRAPILayer
 class ShowItemViewData: Identifiable, ObservableObject {
     var id: String = UUID().uuidString
     var name: String = ""
-    var description: String = ""
+    var des: String = ""
     var mediaType: String = ""
     var uri: String = ""
     var publisher: String = ""
@@ -22,7 +22,7 @@ class ShowItemViewData: Identifiable, ObservableObject {
     init(_ show: ShowItemData) {
         self.id = show.id
         self.name = show.name
-        self.description = show.description
+        self.des = show.description
         self.mediaType = show.mediaType
         self.uri = show.uri
         self.publisher = show.publisher
@@ -33,6 +33,10 @@ class ShowItemViewData: Identifiable, ObservableObject {
 extension ShowItemViewData: IMediaItemData {
     var type: MediaType {
         return .show
+    }
+
+    var description: String? {
+        return des
     }
 
     var imageUrl: String {
@@ -66,7 +70,7 @@ extension ShowItemViewData: IMediaItemData {
     private func update(id: String, name: String, description: String, mediaType: String, uri: String, publisher: String, images: [ImageData]) {
         self.id = id
         self.name = name
-        self.description = description
+        des = description
         self.mediaType = mediaType
         self.uri = uri
         self.publisher = publisher
