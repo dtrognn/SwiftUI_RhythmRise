@@ -13,6 +13,7 @@ final class ShowDetailVM: BaseViewModel {
 
     @Published var show: MediaItemViewData?
     @Published var episodes: [MediaItemViewData] = []
+    @Published var isFollowing: Bool = false
 
     init(_ id: String) {
         self.id = id
@@ -20,6 +21,7 @@ final class ShowDetailVM: BaseViewModel {
 
     func loadData() {
         apiGetShow()
+        apiCheckUsersSavedShows()
     }
 }
 
@@ -44,6 +46,20 @@ extension ShowDetailVM {
                     MediaFactory.mapping(type: .episode, data: $0)
                 }
                 self.episodes = episodesMapping.map { MediaItemViewData($0) }
+            }.store(in: &cancellableSet)
+    }
+
+    // TODO: - check user's saved shows
+    private func apiCheckUsersSavedShows() {
+        let params = CheckUsersSavedShows.Request(ids: id)
+        CheckUsersSavedShows.service.request(parameters: params)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.handleError(error)
+            } receiveValue: { [weak self] response in
+                guard let self = self else { return }
+
+                self.isFollowing = response.first ?? false
             }.store(in: &cancellableSet)
     }
 }

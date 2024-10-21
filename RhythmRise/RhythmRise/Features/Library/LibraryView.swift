@@ -115,7 +115,7 @@ private extension LibraryView {
                     case .show:
                         router.route(to: LibraryRoute.showDetail(mediaSelected.id))
                     default:
-                        return
+                        router.route(to: LibraryRoute.mediaDetail(mediaSelected.id, .album))
                     }
                 }
             }

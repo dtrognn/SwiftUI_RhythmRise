@@ -10,6 +10,7 @@ import SwiftUI
 
 enum LibraryRoute: Route {
     case showDetail(String)
+    case mediaDetail(String, MediaType)
 }
 
 struct LibraryRouter: View {
@@ -22,6 +23,8 @@ struct LibraryRouter: View {
                     switch destination {
                     case .showDetail(let id):
                         ShowDetailView(id)
+                    case .mediaDetail(let id, let type):
+                        MediaDetailView(id: id, playerMediaType: type)
                     }
                 }
         }.environmentObject(router)

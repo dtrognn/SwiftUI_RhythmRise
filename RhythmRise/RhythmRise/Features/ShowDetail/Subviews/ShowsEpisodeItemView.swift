@@ -107,7 +107,7 @@ private extension ShowsEpisodeItemView {
 
     var playPauseButton: some View {
         return Button {
-            // TODO: -
+            configuration.onPlay?(configuration.epidode)
         } label: {
             Image(systemName: "play.circle.fill")
                 .applyTheme(.white)

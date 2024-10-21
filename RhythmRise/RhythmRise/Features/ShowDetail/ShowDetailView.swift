@@ -63,7 +63,9 @@ private extension ShowDetailView {
     var episodesListView: some View {
         return LazyVStack(spacing: themeManager.layout.zero) {
             ForEach(vm.episodes) { episode in
-                ShowsEpisodeItemView(.init(epidode: episode))
+                ShowsEpisodeItemView(.init(epidode: episode, onPlay: { media in
+                    PlayerManager.shared.currentMedia = media
+                }))
             }
         }.padding(.horizontal, themeManager.layout.standardSpace)
     }
@@ -99,7 +101,7 @@ private extension ShowDetailView {
         return Button {
             // TODO: -
         } label: {
-            Text(language("Common_A_01"))
+            Text(language(vm.isFollowing ? "Common_A_03" : "Common_A_01"))
                 .font(themeManager.font.regular16)
                 .foregroundStyle(themeManager.theme.textNormalColor)
                 .padding(.vertical, themeManager.layout.mediumSpace)
