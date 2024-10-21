@@ -5,6 +5,11 @@ target 'RhythmRise' do
 
   # Pods for RhythmRise
   pod 'RRCommon', :path => 'DevPods/RRCommon'
+  pod 'RRCore', :path => 'DevPods/RRCore'
+  pod 'RRAPILayer', :path => 'DevPods/RRAPILayer'
+  pod 'RRAuthentication', :path => 'DevPods/RRAuthentication'
+
+  pod 'UIImageColors'
 
   post_install do |installer|
       installer.pods_project.targets.each do |target|
