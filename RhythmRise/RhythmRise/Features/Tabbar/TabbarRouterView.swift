@@ -75,5 +75,15 @@ struct TabbarRouterView: View {
                     TabItem(.library)
                 }.tag(Tab.library)
         }.tint(ThemeManager.shared.theme.iconColor)
+            .onAppear() {
+                let tabbarAppearance = UITabBarAppearance()
+                tabbarAppearance.configureWithDefaultBackground()
+                tabbarAppearance.backgroundColor = ThemeManager.shared.theme.tabbarBackgroundViewColor.asUIColor()
+                UITabBar.appearance().standardAppearance = tabbarAppearance
+
+                if #available(iOS 15.0, *) {
+                    UITabBar.appearance().scrollEdgeAppearance = tabbarAppearance
+                }
+            }
     }
 }
